@@ -1,0 +1,242 @@
+html,body {
+	height: 100%;
+	margin: 0;
+	background-color: #E5E5E5;
+	font-family: 'RobotoDraft', sans-serif;
+}
+
+.absolute-center {
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+.bottom_filter{
+	margin-top: 20px;
+}
+
+.label_filter{
+	font-size: small;
+	font-variant: small-caps;
+}
+    
+/* CORE TOOLBAR */
+core-header-panel {
+	height: 100%;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch; 
+	background: white;
+}
+core-toolbar {
+	background: #00C346;
+	color: white;
+}
+#tabs {
+	top:-8px;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.container {
+	width: 80%;
+	margin: 50px auto;
+}
+
+#navheader {
+  background: #EEEEEE;
+  color: #FFFFFF;
+}
+
+.content {
+  padding: 20px;
+}
+
+/* PANEL DRAWER */
+core-drawer-panel:not([narrow]) #navicon {
+  display: none;
+  fill: white;
+}
+core-drawer-panel #navicon {
+  fill: white;
+}
+
+/* Button */
+.button {
+  display: inline-block;
+  position: relative;
+  width: 120px;
+  height: 32px;
+  line-height: 32px;
+  border-radius: 2px;
+  font-size: 0.9em;
+  background-color: #fff;
+  color: #646464;
+  cursor: pointer;
+}
+
+.button > paper-ripple {
+  border-radius: 2px;
+  color:#84ff88;
+}
+
+.button.raised {
+  transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: 0.2s;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  width:98%;
+}
+
+.button.raised:active {
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
+  transition-delay: 0s;
+}
+
+/* Icons */
+core-icon-button {
+    fill: white;
+}
+  
+/* Tooltip Fancy Effect  */  
+core-tooltip.fancy::shadow .polymer-tooltip {
+  opacity: 0;
+  -webkit-transition: all 300ms cubic-bezier(0,1.92,.99,1.07);
+  transition: all 300ms cubic-bezier(0,1.92,.99,1.07);
+  -webkit-transform: translate3d(0, -10px, 0);
+  transform: translate3d(0, -10px, 0);
+}
+
+core-tooltip.fancy:hover::shadow .polymer-tooltip,
+core-tooltip.fancy:focus::shadow .polymer-tooltip {
+  opacity: 1;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  font-size: 12px;
+  margin-left: 15px;
+}
+core-tooltip:hover::shadow .polymer-tooltip,
+core-tooltip:focus::shadow .polymer-tooltip {
+  opacity: 1;
+  font-size: 12px;
+  background: #2E4F76;
+}
+
+/* DIALOG BUTTONS */
+paper-button.colored {
+  fill:black; 
+  color: #363636;
+}
+paper-button.colored.hover:hover {
+  border: solid 1px solid #00C346;
+}
+
+section {
+  text-align: center;
+  color: #00C346;
+  font-weight: bold!important;
+}
+
+paper-button.colored.view {
+  fill:black; 
+  color: #363636;
+  background: #00C346;
+}
+paper-button.colored.view.hover:hover {
+  border: solid 1px solid #00C346;
+  background: #3eea7d;
+}
+paper-button.colored.view::shadow #ripple {
+  color: #D73D32;
+}
+
+/* Misc */
+.center {
+  text-align: center;
+}
+
+.contentDrawer {
+   border-left: solid #00C346;
+   padding: 20px;
+}
+
+
+@media (min-width: 481px) {
+#tabs {
+  width: 200px;
+}
+.container {
+  width: 400px;
+}
+}
+
+@media (max-width: 480px){
+#cicLogo {
+	opacity: 0;
+}
+}
+
+/* .POLYMER ELEMENTS CSS. */
+ paper-checkbox {
+      padding: 15px;
+    }
+    paper-toggle-button {
+      padding: 5px;
+    }
+    
+    /* Default color*/
+    paper-toggle-button.default::shadow paper-radio-button::shadow #ink[checked] {color: #00C346;}
+    paper-toggle-button.default::shadow paper-radio-button::shadow #onRadio {background-color: #00C346;}
+    paper-toggle-button.default::shadow #toggleBar[checked] {background-color: #00C346;}
+    paper-checkbox.default::shadow #ink[checked] {color: #00C346;}
+    paper-checkbox.default::shadow #checkbox.checked {border-color: #00C346;}
+    
+    /* lightGreen color*/
+    paper-toggle-button.lightGreen::shadow paper-radio-button::shadow #ink[checked] {color: #7FC445;}
+    paper-toggle-button.lightGreen::shadow paper-radio-button::shadow #onRadio {background-color: #7FC445;}
+    paper-toggle-button.lightGreen::shadow #toggleBar[checked] {background-color: #7FC445;}
+    paper-checkbox.lightGreen::shadow #ink[checked] {color: #7FC445;}
+    paper-checkbox.lightGreen::shadow #checkbox.checked {border-color: #7FC445;}
+    
+     /* green color*/
+    paper-toggle-button.green::shadow paper-radio-button::shadow #ink[checked] {color: #4EBB86;}
+    paper-toggle-button.green::shadow paper-radio-button::shadow #onRadio {background-color: #4EBB86;}
+    paper-toggle-button.green::shadow #toggleBar[checked] {background-color: #4EBB86;}
+    paper-checkbox.green::shadow #ink[checked] {color: #4EBB86;}
+    paper-checkbox.green::shadow #checkbox.checked {border-color: #4EBB86;}
+    
+    /* blue color*/
+    paper-toggle-button.blue::shadow paper-radio-button::shadow #ink[checked] {color: #80A5D7;}
+    paper-toggle-button.blue::shadow paper-radio-button::shadow #onRadio {background-color: #80A5D7;}
+    paper-toggle-button.blue::shadow #toggleBar[checked] {background-color: #80A5D7;}
+    paper-checkbox.blue::shadow #ink[checked] {color: #80A5D7;}
+    paper-checkbox.blue::shadow #checkbox.checked {border-color: #80A5D7;}
+    
+    /* yellow color*/
+    paper-toggle-button.yellow::shadow paper-radio-button::shadow #ink[checked] {color: #E2B900;}
+    paper-toggle-button.yellow::shadow paper-radio-button::shadow #onRadio {background-color: #E2B900;}
+    paper-toggle-button.yellow::shadow #toggleBar[checked] {background-color: #E2B900;}
+    paper-checkbox.yellow::shadow #ink[checked] {color: #E2B900;}
+    paper-checkbox.yellow::shadow #checkbox.checked {border-color: #E2B900;}
+    
+    /* orange color*/
+    paper-toggle-button.orange::shadow paper-radio-button::shadow #ink[checked] {color: #EC881F;}
+    paper-toggle-button.orange::shadow paper-radio-button::shadow #onRadio {background-color: #EC881F;}
+    paper-toggle-button.orange::shadow #toggleBar[checked] {background-color: #EC881F;}
+    paper-checkbox.orange::shadow #ink[checked] {color: #EC881F;}
+    paper-checkbox.orange::shadow #checkbox.checked {border-color: #EC881F;}
+    
+    /* red color*/
+    paper-toggle-button.red::shadow paper-radio-button::shadow #ink[checked] {color: #E01812;}
+    paper-toggle-button.red::shadow paper-radio-button::shadow #onRadio {background-color: #E01812;}
+    paper-toggle-button.red::shadow #toggleBar[checked] {background-color: #E01812;}
+    paper-checkbox.red::shadow #ink[checked] {color: #E01812;}
+    paper-checkbox.red::shadow #checkbox.checked {border-color: #E01812;}
+    
+    /* gray color*/
+    paper-toggle-button.gray::shadow paper-radio-button::shadow #ink[checked] {color: #D6D6D6;}
+    paper-toggle-button.gray::shadow paper-radio-button::shadow #onRadio {background-color: #D6D6D6;}
+    paper-toggle-button.gray::shadow #toggleBar[checked] {background-color: #D6D6D6;}
+    paper-checkbox.gray::shadow #ink[checked] {color: #D6D6D6;}
+    paper-checkbox.gray::shadow #checkbox.checked {border-color: #D6D6D6;}
+    

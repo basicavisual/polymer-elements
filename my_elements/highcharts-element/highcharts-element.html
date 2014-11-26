@@ -1,0 +1,133 @@
+<!--
+@group Polymer My Elements
+@element highcharts-element
+@author chuycepeda@gmail.com
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="highcharts-element" attributes="__type __data __enable3D __title __subtitle __animation __crosshairX __crosshairY __layout __backgroundColor __legendHAlign __legendVAlign __gradient" >
+    <template>
+        <div id="chartContainer" style="height: 400px"></div>
+    </template>
+<script>
+    Polymer('highcharts-element', {
+      chart: null,
+      __type: 'line',
+      __data: null,
+      __enable3D: 'false',
+      __title: '',
+      __subtitle: '',
+      __animation: 'true',
+      __crosshairX: 'false',
+      __crosshairY: 'false',
+      __layout: 'horizontal',
+      __backgroundColor: '#FFFFFF',
+      __legendHAlign: 'center',
+      __legendVAlign: 'bottom',
+      __gradient: 'true',
+      ready: function() {
+        this.loadChart();
+      },
+      loadChart: function(){
+        var opts = this.chartOptions;
+        this.optionsUpdate();  
+        opts.chart.renderTo = this.$.chartContainer;
+        this.chart = new Highcharts.Chart(opts);
+        this.addData();
+        this.chart.redraw();
+      },
+      chartOptions: {
+        chart: {
+            type: this.__type,
+            options3d: {
+                enabled: this.__enable3D,
+                alpha: 30
+            }
+        },
+        colors: ['#F15934', '#7BC655', '#47ABE6', '#B187DB', '#E4B94E', '#f15c80', '#8d4653', '#91e8e1'],
+        title: {
+            text: this.__title
+        },
+        subtitle: {
+            text: this.__subtitle
+        },
+        plotOptions: {
+            pie: {
+                innerSize: 0,
+                depth: 45,
+                allowPointSelect: true,
+                startAngle: 0,
+                endAngle: 360,
+                center: ['50%', '50%']
+            }
+        },
+        xAxis: {
+            categories: []
+        },
+        series: [],
+        tooltip: {
+            animation: this.__animation,
+            pointFormat: '{series.name}: <b>{point.y}</b><br/>',
+            crosshairs: [this.__crosshairX,this.__crosshairY],
+            shared: true
+        },
+        legend: {
+            layout: this.__layout,
+            backgroundColor: this.__backgroundColor,
+            align: this.__legendHAlign,
+            verticalAlign: this.legendVAlign
+        }
+      },
+      optionsUpdate: function(){
+        this.chartOptions.chart.type = this.__type;
+        if (this.__type == 'donut'){
+            this.chartOptions.chart.type = 'pie';
+            this.chartOptions.plotOptions.pie.innerSize = 100;
+        }
+        if (this.__type == 'pie')
+            if (this.__gradient == 'true') this.doGradient();
+        var _enable3D =  this.__enable3D == 'true' ? true : false;   
+        this.chartOptions.chart.options3d.enabled = _enable3D;
+        this.chartOptions.title.text = this.__title;
+        this.chartOptions.subtitle.text = this.__subtitle;
+        var _animation =  this.__enable3D == 'true' ? true : false; 
+        this.chartOptions.tooltip.animation = _animation;
+        var _crosshairX = this.__crosshairX == 'true' ? true : false;
+        var _crosshairY = this.__crosshairY == 'true' ? true : false;    
+        this.chartOptions.tooltip.crosshairs = [_crosshairX,_crosshairY];
+        this.chartOptions.legend.layout =  this.__layout; 
+        this.chartOptions.legend.backgroundColor =  this.__backgroundColor; 
+        this.chartOptions.legend.align = this.__legendHAlign;  
+        this.chartOptions.legend.verticalAlign = this.__legendVAlign;
+          
+          
+      },
+      addData: function(){
+        var _data = this.__data.split('},').reduce(
+          function(previousValue, currentValue, i, a) {
+            previousValue.push(currentValue);
+            return previousValue;
+          }, []);  
+          
+        for (var i=0, j=_data.length; i<j;i++)  
+           if (i != j-1)
+            this.chart.addSeries(JSON.parse(_data[i]+"}"));
+           else
+            this.chart.addSeries(JSON.parse(_data[i]));   
+      },
+      doGradient: function (){
+        this.chartOptions.colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
+                return {
+                    radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
+                    stops: [
+                        [0, color],
+                        [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+                    ]
+                };
+            });
+      }
+    });
+  
+</script>
+</polymer-element>

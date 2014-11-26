@@ -1,0 +1,223 @@
+from google.appengine.ext import ndb
+
+#-----------------------------------  H A B I T A N T S  ----------------------------------------
+class Notifications(ndb.Model):  #used for UserInfo
+    SMS = ndb.BooleanProperty()
+    email = ndb.BooleanProperty()
+    endpoint = ndb.BooleanProperty()
+    
+class Habitants(ndb.Model):
+    ID = ndb.StringProperty(required = True)    #unique ID for user uuid.uuid1()
+    name = ndb.StringProperty(required = True)
+    email = ndb.StringProperty(required = True)
+    status = ndb.StringProperty() #Todo: define what's public what's private
+    phone = ndb.IntegerProperty()
+    endpoint = ndb.BooleanProperty() #This is a shit to think about...
+    pwd = ndb.StringProperty(required = True)
+    picture = ndb.BlobProperty(required = True)
+    role = ndb.StringProperty(choices = ['','','','']) #Todo: write roles here
+    interests = ndb.StringProperty(choices = ['','','','']) #Todo: write posible interests and way to load new
+    notify = ndb.StructuredProperty(Notifications)
+    lastLogin = ndb.DateTimeProperty()              #used for cron jobs inviting to come back when long-time no seeing you
+#---------------------------------- ENDOF  H A B I T A N T S ------------------------------------   
+
+class Address(ndb.Model):
+    latlng = ndb.GeoPtProperty()            #Geocoded from address fields
+    ageb = ndb.IntegerProperty()            #Derived from latlng 
+    state = ndb.StringProperty()
+    municipality = ndb.StringProperty()
+    neighborhood = ndb.StringProperty()
+    street = ndb.StringProperty()
+    streetnum = ndb.StringProperty()
+    zipcode = ndb.IntegerProperty()
+    geoaddress = ndb.StringProperty()       #Geodecoded address
+    weatherZone = ndb.StringProperty()      #Todo: Pulled from ____URL_____
+    
+class CFE(ndb.Model):
+    RPU = ndb.IntegerProperty()
+    name = ndb.StringProperty()
+    fee = ndb.StringProperty()
+        
+class Rank(ndb.Model):
+    #Todo: these must be computedproperties ; Recurrent cron-jobs each day; 
+    local = ndb.IntegerProperty()
+    home_class = ndb.IntegerProperty()
+    friends = ndb.IntegerProperty()
+
+#---------------------------------- H O M E     A T T R I B U T E S ------------------------------------   Todo: fill these classes
+class Lifestyle(ndb.Model):
+    
+class Lightning(ndb.Model):
+    
+class Heating(ndb.Model):
+    
+class AirCondition(ndb.Model):
+    
+class Entertainment(ndb.Model):
+    
+class Appliances(ndb.Model):
+
+class Others(ndb.Model):        
+    
+class HomeAttributes(ndb.Model):
+    lifestyle = ndb.StructuredProperty(Lifestyle)
+    lightning = ndb.StructuredProperty(Lightning)
+    heating = ndb.StructuredProperty(Heating)
+    aircondition = ndb.StructuredProperty(AirCondition)
+    entertainment = ndb.StructuredProperty(Entertainment)
+    appliances = ndb.StructuredProperty(Appliances)
+    others = ndb.StructuredProperty(Others)
+#--------------------------------- ENOF H O M E     A T T R I B U T E S ------------------------------------
+
+class Rewards(ndb.Model):
+    total = ndb.IntegerProperty() #Todo this must be a computedproperty(sum(all by's herein))
+    byReferrals = ndb.IntegerProperty()
+    byDevices = ndb.IntegerProperty()
+    byActions = ndb.IntegerProperty()
+    byProjects = ndb.IntegerProperty()
+    byHomeAttributes = ndb.IntegerProperty()
+    #Todo: what else gives rewards ?
+
+class Boxes(ndb.Model):
+    has_box = ndb.BooleanProperty(default = False)
+    status = ndb.StringProperty(choices = [halted, online, offline])    #written according to BigQuery last reading
+    serialNumber = ndb.StringProperty()                                 #used to pull data from BigQuery
+    #timeStamp comes from BigQuery
+    #liveIntake comes from BigQuery
+
+class Devices(ndb.Model):
+    ID = ndb.StringProperty(required = True)                            #unique ID for action from GlobalDevices
+    serialNumer = ndb.StringProperty(required = True)                   #used to pull data from BigQuery
+    status = ndb.StringProperty(choices = [halted, online, offline])    #written according to BigQuery last reading
+    mood = ndb.StringProperty()                                         #Todo use CSV values / parameter repeated or choices
+    notify = ndb.StructuredProperty(Notifications)
+    autoMode = ndb.BooleanProperty()
+    toggle = ndb.BooleanProperty()                                      #Todo think of usage, shall we read, control, or what?
+    #timeStamp comes from BigQuery
+    #liveIntake comes from BigQuery, will this be real or devices are write-Only (aka ON/OFF)?
+
+class Actions(ndb.Model):
+    ID = ndb.StringProperty(required = True)                            #unique ID for action from GlobalActions
+    since = ndb.DateProperty(auto_now_add)
+    status = ndb.StringProperty(choices = [halted, online, offline])    #written according to user input Todo: check date vs savings
+    
+class Referrals(ndb.Model):
+    email = ndb.StringProperty(required = True)
+    status = ndb.StringProperty(required = True, choices = ['','',''], default = '')    #Todo bring statuses from dropbox herein
+    #className ?
+
+class Friends(ndb.Model):
+    userID = ndb.StringProperty(required = True)  #shall be from users' base 
+    email = ndb.StringProperty(required = True)   #shall be from users' base
+    status = ndb.StringProperty(required = True, choices = ['','',''], default = '')    #Todo bring statuses from facebook herein
+    homeID = ndb.StringProperty(required = True)  #shall be from home's base                
+
+class Groups(ndb.Model):
+    ID = ndb.StringProperty(required = True)    #unique ID for group
+    memberType = ndb.StringProperty(required = True, choices['','',''], default = '')    #Todo write member types herein 
+    joined_at = ndb.DateProperty()                                      #this must be written when 
+
+class Projects(ndb.Model):
+    ID = ndb.StringProperty(required = True)
+    contribution = ndb.StringProperty(choices = ['','','',''])                      #Todo bring contribution types herein
+
+class PPA(ndb.Model):
+    #Todo define this PPA class
+    
+class Intakes(ndb.Model):
+    #Todo define this Intakes class: include ideal and global billed intake :: real_time intake will be allocated at BigQuery
+    
+#--------------------------------------- M A I N    A C C O U N T -----------------------------------------    
+class Home(ndb.Model):  #Main Customer Account for Platform 
+    ID = ndb.StringProperty(required = True, default = uuid.uuid1())    #unique ID for account/home
+    since = ndb.DateProperty(required = True, auto_now_add)
+    habitant = ndb.StructuredProperty(Habitants, repeated = True)       #habitant that can be several for same home 
+    address = ndb.StructuredProperty(Address)
+    cfe = ndb.StructuredProperty(CFE)
+    rank = ndb.StructuredProperty(Rank)
+    attributes = ndb.StructuredProperty(HomeAttributes)                 #electric energy home characterization
+    className = ndb.StringProperty(choices = ['','','',''])             #Todo: write possible class names for homes
+    customerlevel = ndb.StringProperty(choices = ['','','',''])         #Todo: write possible customer level
+    consumerlevel = ndb.StringProperty(choices = ['','','',''])         #Todo: write possible consumer level
+    rewards = ndb.StructuredProperty(Rewards)                           #aggregated rewards for same home form different users
+    box =  ndb.StructuredProperty(Boxes)                                #to identify if home has box and which box is linked      
+    device = ndb.StructuredProperty(Devices, repeated = True)           #device that can be several for same home
+    action = ndb.StructuredProperty(Actions, repeated = True)           #action that can be several for same home
+    referral = ndb.StructuredProperty(Referrals, repeated = True)       #referral that can be several for same home
+    friend = ndb.StructuredProperty(Friends, repeated = True)           #friend that can be several for same home
+    group = ndb.StructuredProperty(Groups, repeated = True)             #group that can be several for same home
+    project = ndb.StructuredProperty(Projects, repeated = True)         #project that can be several for same home
+    ppa = ndb.StructuredProperty(PPA)                                   
+    intake = ndb.StructuredProperty(Intakes)                                   
+#--------------------------------------- ENDOF  M A I N    A C C O U N T -----------------------------------------     
+    
+    
+#--------------------------------------- G L O B A L    K I N D S -----------------------------------------     
+    
+class Constants(ndb.Model):
+    #Todo define thie Constants class, see Globals at Seaquail
+    
+class GlobalDevices(ndb.Model):
+    ID = ndb.StringProperty(required = True)                            #unique ID for action from GlobalDevices
+    name = ndb.StringProperty(required = True)
+    className = ndb.StringProperty(required = True, choices = ['','','',''], default = '')  #Todo write device classes here
+    description = ndb.StringProperty(required = True)
+    fabricantKWh = ndb.IntegerProperty(required = True)
+    savingsEst = ndb.IntegerProperty(required = True)
+    costM = ndb.IntegerProperty()                                       #used for money cost
+    costQ = ndb.IntegerProperty()                                       #used for rewards (qubit) cost    
+    image = ndb.BlobProperty()
+    rewardsGiven = ndb.IntegerProperty(required = True, default = 0)
+    
+class GlobalActions(ndb.Model):
+    ID = ndb.StringProperty(required = True)                            #unique ID for action uuid.uuid1()
+    name = ndb.StringProperty(required = True)
+    className = ndb.StringProperty(required = True, choices['','',''], default = '')    #Todo write actions' classes herein    
+    description = ndb.StringProperty(required = True)
+    savingsEst = ndb.IntegerProperty(required = True)
+    costM = ndb.IntegerProperty()                                       #used for money cost
+    costQ = ndb.IntegerProperty()                                       #used for rewards (qubit) cost    
+    image = ndb.BlobProperty()
+    adopters = ndb.IntegerProperty(default = 0) 
+    likes = ndb.IntegerProperty(default = 0)
+    disqus = ndb.StringProperty(required = True)                        #Todo use computedproperty according to action name
+    programmes = ndb.StringProperty()                                   #Todo use CSV values / parameter repeated or choices
+    rewardsGiven = ndb.IntegerProperty(required = True, default = 0)
+    
+class Programmes(ndb.Model):
+    ID = ndb.StringProperty(required = True)                            #unique ID for action uuid.uuid1()
+    name = ndb.StringProperty(required = True)
+    className = ndb.StringProperty(required = True, choices['','',''], default = '')    #Todo write programmes' classes herein    
+    description = ndb.StringProperty(required = True)
+    savingsEst = ndb.IntegerProperty(required = True)
+    effort = ndb.IntegerProperty(required = True, choices['','',''], default = '')      #Todo write effort levels herein
+    actionID = ndb.StringProperty(repeated = True)
+    adopters = ndb.IntegerProperty(default = 0) 
+    likes = ndb.IntegerProperty(default = 0)
+    disqus = ndb.StringProperty(required = True)                        #Todo use computedproperty according to action name
+    
+class GlobalGroups(ndb.Model):
+    ID = ndb.StringProperty(required = True)                            #unique ID for group
+    name = ndb.StringProperty(required = True)   
+    description = ndb.StringProperty(required = True)
+    image = ndb.BlobProperty()
+    creator = ndb.StringProperty(required = True)                       #shall be from users' base
+    created_at = ndb.DateProperty(required = True, auto_now_add)
+    #Todo userID as repeated here ?
+    
+class GlobalProjects(ndb.Model):
+    ID = ndb.StringProperty(required = True)                            #unique ID for project
+    name = ndb.StringProperty(required = True)   
+    description = ndb.StringProperty(required = True)
+    className = ndb.StringProperty(required = True, choices['','',''], default = '')    #Todo write projects' classes herein    
+    image = ndb.BlobProperty()
+    status = ndb.StringProperty(required = True, choices['','',''], default = '')    #Todo write status' choices herein     
+    url = ndb.StringProperty()
+    video = ndb.StringProperty()
+    fundGoal = ndb.IntegerProperty(required = True, default = 0)
+    fundReach = ndb.IntegerProperty(required = True, default = 0)
+    rewardsGiven = ndb.IntegerProperty(required = True, default = 0)
+    creator = ndb.StringProperty(required = True)                       #shall be from users' base
+    created_at = ndb.DateProperty(required = True, auto_now_add)
+    #Todo userID as repeated here ?
+    #Todo groupID as repeated here ?

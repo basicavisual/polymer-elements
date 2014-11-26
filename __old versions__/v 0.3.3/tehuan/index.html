@@ -1,0 +1,294 @@
+﻿<!doctype html>
+<html>
+
+<head>
+	<!--*************
+	*               *
+	*   META-DATA   *   
+	*               *
+	**************-->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="TEHUAN para el CIC es una red de confianza 100% ciudadana que enlaza e integra al ciudadano y las autoridades por medio de espacios claros." />
+	<meta name="keywords" content="CIC,TEHUAN,CICMty,Tehuan,Monterrey"/>
+	<meta name="author" content="Jesús Cepeda (@chuycepeda), Jesús Del Bosque (@chuydb)"/>
+	<meta property="og:site_name" content="Tehuan 3.0"/>
+	<meta property="og:title" content="Conoce el Proyecto CIC - Tehuan"/>
+	<meta property="og:type" content="non_profit"/>
+	<meta property="og:description" content="Tehuan para el CIC es una red de confianza 100% ciudadana que enlaza e integra al ciudadano y las autoridades por medio de espacios claros."/>
+	<meta property="og:url" content="http://tehuan.cic.mx"/>
+	<meta property="og:image" content="http://storage.googleapis.com/cic-icalia/logo_cic_100x222NEW.png"/>
+	<meta property="og:image" content="http://storage.googleapis.com/cic-icalia/logo_cic_100x222NEW.png"/>
+	<meta property="og:image" content="http://storage.googleapis.com/cic-icalia/logo_cic_100x222NEW.png"/>
+	<meta name="twitter:title" content="Te invito a conocer el Proyecto Tehuan de @CICMty"/>
+	<meta name="twitter:image" content="http://storage.googleapis.com/cic-icalia/logo_cic_100x222NEW.png"/>
+	<meta property="twitter:description" content="Tehuan para el CIC es una red de confianza 100% ciudadana que enlaza e integra al ciudadano y las autoridades por medio de espacios claros."/>
+	<title>The new tehuan</title>
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">	
+	<link rel="shortcut icon" href="http://www.polymer-project.org/images/logos/p-logo-16.png">
+	
+	<!--*************
+	*               *
+	*    POLYMER    *   
+	*               *
+	**************-->
+	
+	<!--  PLATFORM   --><script src="../components/platform/platform.js"></script>
+	<!--  IMPORTS   --><link rel="import" href="imports.html">
+	<!-- DECLARATIONS  -->
+	<core-iconset id="custom-icons-png" src="../components/core-iconset/tehuan-icons.png" width="301" iconSize="43" icons="home heat agebs torque trend stat score word list occur twitter newreport inten reset-filters active-filters distance category dates municipality detail"></core-iconset>
+	
+	<!--*************
+	*               *
+	*  STYLESHEETS  *   
+	*               *
+	**************-->
+	
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/plugins/joyride/joyride-2.1.css"> </head>
+
+<body unresolved touch-action="auto">
+
+	<core-drawer-panel id="drawerPanel">
+	
+		<!--*************
+		*               *
+		*    FILTERS    *   
+		*               *
+		**************-->
+		<core-header-panel drawer>
+		    <core-toolbar id="navheader'">
+		      <span>Filtros</span>
+		    </core-toolbar>
+		    <core-menu>
+		    	
+		    	<!--CATEGORIAS-->
+		    	<div class="button raised" onclick="toggleCollapse('#collapse0')">
+			      <div class="center" fit>
+				      <core-icon icon="custom-icons-png:category" size="43" label="Categoría"></core-icon>
+			      </div>
+			      <paper-ripple fit></paper-ripple>
+			    </div>
+			    <core-collapse id="collapse0" fixedSize class="box" style="height: auto;">
+			      <div id="categories" class="contentDrawer"></div>
+			    </core-collapse>
+		    
+		        <!--FECHAS-->
+		      	<div class="button raised" onclick="toggleCollapse('#collapse1')">
+			      <div class="center" fit>
+				      <core-icon icon="custom-icons-png:dates" size="43" label="Fecha, Día y Hora"></core-icon>
+			      </div>
+			      <paper-ripple fit></paper-ripple>
+			    </div>
+			    <core-collapse id="collapse1" fixedSize class="box" style="height: auto;">
+			      <div id="dates"></div>
+			    </core-collapse>
+			    
+			    <!--DETALLE-->
+			    <div class="button raised" onclick="toggleCollapse('#collapse2')">
+			      <div class="center" fit>
+				      <core-icon icon="custom-icons-png:detail" size="43" label="Detalle del reporte"></core-icon>
+			      </div>
+			      <paper-ripple fit></paper-ripple>
+			    </div>
+			    <core-collapse id="collapse2" fixedSize class="box" style="height: auto;">
+			      <div class="contentDrawer">liquidum matutinis invasit posset: flexi glomeravit </div>
+			    </core-collapse>
+			    
+			    <!--DISTANCIA & POLÍGONOS-->
+			    <div class="button raised" onclick="toggleCollapse('#collapse3')">
+			      <div class="center" fit>
+				      <core-icon icon="custom-icons-png:distance" size="43" label="Distancias y Polígonos"></core-icon>
+			      </div>
+			      <paper-ripple fit></paper-ripple>
+			    </div>
+			    <core-collapse id="collapse3" fixedSize class="box" style="height: auto;">
+			      <div class="contentDrawer">liquidum matutinis invasit posset: flexi glomeravit </div>
+			    </core-collapse>
+			    
+			    <!--MUNICIPIOS-->
+			    <div class="button raised" onclick="toggleCollapse('#collapse4')">
+			      <div class="center" fit>
+				      <core-icon icon="custom-icons-png:municipality" size="43" label="Polígonos Municipales"></core-icon>
+			      </div>
+			      <paper-ripple fit></paper-ripple>
+			    </div>
+			    <core-collapse id="collapse4" fixedSize class="box" style="height: auto;">
+			      <div class="contentDrawer">liquidum matutinis invasit posset: flexi glomeravit </div>
+			    </core-collapse>
+			    
+			    <!-- BOTONES DE REMOCIÓN DE FILTROS-->
+				<div class="bottom_filter">
+				<core-tooltip label="Mostrar filtros" position="bottom">
+			    <div class="button raised" onclick="doFilterAction(6,'show')" style="width:110px; float:left; background:#00C346; margin-left: 2px;">
+			      <div class="center" fit>
+				      <core-icon icon="custom-icons-png:active-filters" size="43" label="Mostrar filtros"></core-icon>
+			      </div>
+			      <paper-ripple fit></paper-ripple>
+			    </div>
+			    </core-tooltip>
+			    
+			    <core-tooltip label="Limpiar filtros" position="bottom">
+			    <div class="button raised" onclick="doFilterAction(6,'reset')" style="width:110px;float:right;margin-right:5px; background:rgba(165, 165, 165, 1);">
+			      <div class="center" fit>
+				      <core-icon icon="custom-icons-png:reset-filters" size="43" label="Remover filtros"></core-icon>
+			      </div>
+			      <paper-ripple fit></paper-ripple>
+			    </div>
+			    </core-tooltip>
+			    </div>
+			    
+		    </core-menu>
+		   </core-header-panel>
+		  
+		   
+		<!--*************
+		*               *
+		*   MAIN PANEL  *   
+		*               *
+		**************--> 
+		<core-header-panel main>
+		    <core-toolbar id="mainheader">
+		      <core-tooltip label="Filtrar" class="fancy" id="numero5"><paper-icon-button id="navicon" icon="filter"></paper-icon-button></core-tooltip>
+		     <span flex id="cicLogo"><img src="http://www.cic.mx/tehuan-beta/images/cic.png" height="32" style="width:auto; z-index:11;"></span>
+			  
+				<core-tooltip label="Cambiar vista" class="fancy" id="numero1"><core-icon-button icon="apps" onclick="toggleDialog('paper-dialog-transition-bottom')"></core-icon-button></core-tooltip>
+				
+			    <core-tooltip label="Compartir" class="fancy" id="numero2"><core-icon-button icon="social:share" onclick="toggleDialog('paper-dialog-transition-center')"></core-icon-button></core-tooltip>
+			    
+			    <core-tooltip label="Actualizar" class="fancy" id="numero3"><core-icon-button icon="refresh" onclick="doMenuAction('refresh')"></core-icon-button></core-tooltip>
+			    
+				<core-tooltip label="Agregar reporte" class="fancy" id="numero4"><core-icon-button icon="add" onclick="doMenuAction('add')"></core-icon-button></core-tooltip>
+				
+				<core-tooltip label="Ayuda" class="fancy"><core-icon-button icon="help" onclick="doMenuAction('help')"></core-icon-button></core-tooltip>
+				
+				
+				<!-- <div id="progressBar" class="bottom fit"></div> -->
+		    </core-toolbar>
+		    
+			<!-- BEGINS MAIN CONTENT -->      
+		    <div class="content" id="main_content">
+				<!-- 	VIEWS MENU DIALOG	 -->
+				<paper-dialog transition="paper-dialog-transition-bottom" style="background-color: rgba(255, 255, 255, 0.55);">
+				   
+				    <section style="margin-top:30px;">
+					    <core-tooltip label="Inicial" class="fancy" position="top">
+					    	<paper-button class="colored view hover" icon="custom-icons-png:home" size="40" onclick="changeView('home')"></paper-button>
+					    </core-tooltip>
+					    <core-tooltip label="Calor" class="fancy" position="top">
+							<paper-button class="colored view hover" icon="custom-icons-png:heat" size="40" onclick="changeView('heat')"></paper-button>
+					    </core-tooltip>
+					    <core-tooltip label="Intensidad" class="fancy" position="top">
+							<paper-button class="colored view hover" icon="custom-icons-png:inten" size="40" onclick="changeView('inten')"></paper-button>
+					    </core-tooltip>  
+					    <core-tooltip label="Animado" class="fancy" position="top">
+					    	<paper-button class="colored view hover" icon="custom-icons-png:torque" size="40" onclick="changeView('torque')"></paper-button>
+					    </core-tooltip>
+					    <core-tooltip label="AGEBs" class="fancy" position="top">
+					    	<paper-button class="colored view hover" icon="custom-icons-png:agebs" size="40" onclick="changeView('agebs')"></paper-button>
+					    </core-tooltip>      
+					   <div class="label" style="padding:5px;">Mapas</div>
+					</section>
+					<section style="margin-top:30px;margin-bottom:10px;">
+						<div class="label" style="padding:5px;">Gráficos</div>
+					    <core-tooltip label="Tendencias" class="fancy">
+					    	<paper-button class="colored view hover" icon="custom-icons-png:trend" size="40" onclick="changeView('trend')"></paper-button>
+					    </core-tooltip>
+					    <core-tooltip label="Estadísticas" class="fancy">
+					    	<paper-button class="colored view hover" icon="custom-icons-png:stat" size="40" onclick="changeView('stat')"></paper-button>
+					    </core-tooltip>
+					    <core-tooltip label="Lenguaje" class="fancy">
+					    	<paper-button class="colored view hover" icon="custom-icons-png:word" size="40" onclick="changeView('word')"></paper-button>
+					    </core-tooltip>
+					    <core-tooltip label="Ocurrencia" class="fancy">  
+					   		<paper-button class="colored view hover" icon="custom-icons-png:occur" size="40" onclick="changeView('occur')"></paper-button>
+					    </core-tooltip>
+					    <core-tooltip label="Gestión" class="fancy"> 
+					    	<paper-button class="colored view hover" icon="custom-icons-png:score" size="40" onclick="changeView('score')"></paper-button> 
+					    </core-tooltip> 
+					</section>
+					
+				</paper-dialog>
+				<!-- 	SOCIALSHARE DIALOG	 -->
+				<paper-dialog transition="paper-dialog-transition-center" style="background-color: rgba(255, 255, 255, 0.55);min-width: 240px;">
+					<div class="absolute-center">
+						<paper-icon-button icon="social:post-gplus" onclick="doMenuAction('gplus')" size="60" style="fill:#D73D32;"></paper-icon-button>
+						<paper-icon-button icon="social:post-twitter" onclick="doMenuAction('twitter')" size="60" style="fill:#55ACEE;"></paper-icon-button>
+						<paper-icon-button icon="social:post-facebook" onclick="doMenuAction('facebook')" size="60" style="fill:#46629E;"></paper-icon-button>
+					</div>
+				</paper-dialog>
+				
+				<!-- 	MAIN MAP	 --> 
+				<google-map disableDefaultUI zoom="13" latitude="25.6847084" longitude="-100.3089153" style="left:0; bottom:0; width:100%; height:100%; position:absolute;"></google-map></div>
+				<script>
+				  var map = document.querySelector('google-map');
+				  map.addEventListener('google-map-ready', function(e) {
+				    window.onresize = function(event) { map.attached(); };
+				  });
+				  
+				</script>
+		    </div>
+			<!-- END OF MAIN CONTENT -->   
+		   
+		</core-header-panel>
+		<!-- ENDS PANEL MAIN --> 
+	
+	</core-drawer-panel>  
+
+<!-- Tip Content -->
+<ol id="joyRideTipContent">
+  <li data-button="" data-text="Siguiente" class="custom">
+    <h2>Bienvenido al tour</h2>
+    <p>Da clic en siguiente para avanzar a la primera estación del recorrido.</p>
+  </li>
+  <li data-id="numero1" data-text="Sig." data-options="tipLocation:left">
+    <h2>#1</h2>
+    <p>Con un clic aquí podrás cambiar la vista principal de mapas a gráficos y viceversa.</p>
+  </li>
+  <li data-id="numero2" data-button="Sig." data-options="tipLocation:left">
+    <h2>#2</h2>
+    <p>Este botón comparte en tus redes sociales la liga a esta herramienta.</p>
+  </li>
+  <li data-id="numero3" data-button="Sig." data-options="tipLocation:left">
+    <h2>#3</h2>
+    <p>Presionando aquí puedes traer hasta el reporte más reciente que hemos recibido.</p>
+  </li>
+  <li data-id="numero4" data-button="Sig." data-options="tipLocation:left">
+    <h2>#4</h2>
+    <p>Como el icono indica, este botón es para sumar tu contribución a la base de reportes.</p>
+  </li>
+  <li data-id="numero5" data-options="tipLocation:right" data-button="Listo !">
+    <h2>#5</h2>
+    <p>Finalmente, así como puedes cambiar las vistas, con este botón puedes filtrar lo que hay en cada una de ellas y ver solo lo que a ti te interesa.</p>
+  </li>
+</ol>	 
+
+<!-- JAVASCRIPT  -->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=drawing,places,panoramio,weather,visualization"></script>
+<script src="http://libs.cartocdn.com/cartodb.js/v2/cartodb.js"></script>
+<script src="js/config.js"></script>
+<script src="js/main.js"></script>
+<script src="js/htmlGenerator.js"></script>
+<script src="js/plugins/jquery.js"></script> 
+<script src="js/plugins/raptor/jquery.raptorize.1.0.js"></script>
+<script src="js/plugins/joyride/jquery.cookie.js"></script>
+<script src="js/plugins/joyride/modernizr.mq.js"></script>
+<script src="js/plugins/joyride/jquery.joyride-2.1.js"></script>
+  <script>
+  window.onload = function() {
+  	//RAPTOR
+    $('.button').raptorize({});
+    
+    //GUIDED TOUR
+    $('#joyRideTipContent').joyride({
+        autoStart : false,
+        modal:true,
+        expose: true
+    });
+    
+    //HTML loaders
+    loadHTML();
+  };
+  </script>
+
+</body>
+</html>

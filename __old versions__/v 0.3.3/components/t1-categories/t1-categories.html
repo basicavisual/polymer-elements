@@ -1,0 +1,142 @@
+<!-- Copyright (c) 2014 Guacamaya Inc. All rights reserved. -->
+
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../font-roboto/roboto.html">
+
+<polymer-element name="t1-categories" attributes="amount categories colors">
+
+<!--
+The `t1-categories` element renders a set of checkbox and radio polymer buttons.
+
+<b>Example</b>:
+
+    <t1-categories amount="2" categories="check1,check2" colors="green,red"></t1-categories>
+
+TODO(chuycepeda):
+- 
+-->
+<polymer-element name="t1-categories" attributes="amount srcURL iconURL label color type">
+
+<template>
+
+  <style>
+
+    :host {
+      position: relative;
+    }
+    paper-checkbox {
+      padding: 15px;
+    }
+    paper-toggle-button {
+      padding: 5px;
+    }
+    
+    /* Default color*/
+    paper-toggle-button.default::shadow paper-radio-button::shadow #ink[checked] {color: #4285f4;}
+    paper-toggle-button.default::shadow paper-radio-button::shadow #onRadio {background-color: #4285f4;}
+    paper-toggle-button.default::shadow #toggleBar[checked] {background-color: #4285f4;}
+    paper-checkbox.default::shadow #ink[checked] {color: #4285f4;}
+    paper-checkbox.default::shadow #checkbox.checked {border-color: #4285f4;}
+    
+    /* lightGreen color*/
+    paper-toggle-button.lightGreen::shadow paper-radio-button::shadow #ink[checked] {color: #7FC445;}
+    paper-toggle-button.lightGreen::shadow paper-radio-button::shadow #onRadio {background-color: #7FC445;}
+    paper-toggle-button.lightGreen::shadow #toggleBar[checked] {background-color: #7FC445;}
+    paper-checkbox.lightGreen::shadow #ink[checked] {color: #7FC445;}
+    paper-checkbox.lightGreen::shadow #checkbox.checked {border-color: #7FC445;}
+    
+     /* green color*/
+    paper-toggle-button.green::shadow paper-radio-button::shadow #ink[checked] {color: #13954c;}
+    paper-toggle-button.green::shadow paper-radio-button::shadow #onRadio {background-color: #13954c;}
+    paper-toggle-button.green::shadow #toggleBar[checked] {background-color: #13954c;}
+    paper-checkbox.green::shadow #ink[checked] {color: #13954c;}
+    paper-checkbox.green::shadow #checkbox.checked {border-color: #13954c;}
+    
+    /* blue color*/
+    paper-toggle-button.blue::shadow paper-radio-button::shadow #ink[checked] {color: #80A5D7;}
+    paper-toggle-button.blue::shadow paper-radio-button::shadow #onRadio {background-color: #80A5D7;}
+    paper-toggle-button.blue::shadow #toggleBar[checked] {background-color: #80A5D7;}
+    paper-checkbox.blue::shadow #ink[checked] {color: #80A5D7;}
+    paper-checkbox.blue::shadow #checkbox.checked {border-color: #80A5D7;}
+    
+    /* yellow color*/
+    paper-toggle-button.yellow::shadow paper-radio-button::shadow #ink[checked] {color: #E2B900;}
+    paper-toggle-button.yellow::shadow paper-radio-button::shadow #onRadio {background-color: #E2B900;}
+    paper-toggle-button.yellow::shadow #toggleBar[checked] {background-color: #E2B900;}
+    paper-checkbox.yellow::shadow #ink[checked] {color: #E2B900;}
+    paper-checkbox.yellow::shadow #checkbox.checked {border-color: #E2B900;}
+    
+    /* orange color*/
+    paper-toggle-button.orange::shadow paper-radio-button::shadow #ink[checked] {color: #EC881F;}
+    paper-toggle-button.orange::shadow paper-radio-button::shadow #onRadio {background-color: #EC881F;}
+    paper-toggle-button.orange::shadow #toggleBar[checked] {background-color: #EC881F;}
+    paper-checkbox.orange::shadow #ink[checked] {color: #EC881F;}
+    paper-checkbox.orange::shadow #checkbox.checked {border-color: #EC881F;}
+    
+    /* red color*/
+    paper-toggle-button.red::shadow paper-radio-button::shadow #ink[checked] {color: #E01812;}
+    paper-toggle-button.red::shadow paper-radio-button::shadow #onRadio {background-color: #E01812;}
+    paper-toggle-button.red::shadow #toggleBar[checked] {background-color: #E01812;}
+    paper-checkbox.red::shadow #ink[checked] {color: #E01812;}
+    paper-checkbox.red::shadow #checkbox.checked {border-color: #E01812;}
+    
+    /* gray color*/
+    paper-toggle-button.gray::shadow paper-radio-button::shadow #ink[checked] {color: #D6D6D6;}
+    paper-toggle-button.gray::shadow paper-radio-button::shadow #onRadio {background-color: #D6D6D6;}
+    paper-toggle-button.gray::shadow #toggleBar[checked] {background-color: #D6D6D6;}
+    paper-checkbox.gray::shadow #ink[checked] {color: #D6D6D6;}
+    paper-checkbox.gray::shadow #checkbox.checked {border-color: #D6D6D6;}
+    
+    /*
+    comunidad  #7FC445
+    propuesta #5ABD85
+    sguridad #80A5D7
+    servicios #E2B900
+    vialidad #EC881F
+    emergencia #E01812
+    otros #D6D6D6
+    */
+
+  </style>
+
+  <div id="filterCat" style="font-size: 12px; width:205px;"></div>
+  
+</template>
+<script>
+
+  Polymer('t1-categories', {
+	  amount: 1,
+	  srcURL: "#",
+	  iconURL: "#",
+	  label: 'toggle me',
+	  color: 'default',
+	  type:'toggle',
+	  ready: function(){
+		  var innerHTML = "";
+		  var _iconURLs = this.iconURL.split(",");
+		  var _labels = this.label.split(",");
+		  var _colors = this.color.split(",");
+		  var _types = this.type.split(",");
+		  
+		  var _iconURL,_label,_color,_type;
+		  
+		  for (var i=0; i < this.amount; i++){
+		      _iconURL = _iconURLs.length > i ? _iconURLs[i] : _iconURLs[0];
+		      _label = _labels.length > i ? _labels[i] : _labels[0];
+		      _color = _colors.length > i ? _colors[i] : _colors[0];
+		      _type = _types.length > i ? _types[i] : _types[0];
+		  	  
+		  	  if (_type === 'toggle')
+			  	innerHTML += "<div center horizontal layout style=\"margin-left:30px;\"><img src=\""+this.srcURL+_iconURL+"\"width=\"45\" height=\"45\" title=\""+_label+"\" style=\"margin-top:8px;\"><paper-toggle-button class=\""+_color+"\" id=\""+_label+"\"></paper-toggle-button></div>";
+			  else
+			  	innerHTML += "<div center horizontal layout style=\"margin-left:30px;\"><img src=\""+this.srcURL+_iconURL+"\"width=\"45\" height=\"45\" title=\""+_label+"\"><paper-checkbox class=\""+_color+"\" id=\""+_label+"\" style=\"margin-top:-12px;\"></paper-checkbox></div>";
+		  }
+		  this.$.filterCat.innerHTML = innerHTML;
+	  }
+  });
+  
+  
+</script>
+</polymer-element>

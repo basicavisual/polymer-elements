@@ -1,0 +1,16 @@
+{
+  "name": "bower install --save Polymer/polymer",
+  "version": "0.0.0",
+  "authors": [
+    "chuycepeda <chuycepeda@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

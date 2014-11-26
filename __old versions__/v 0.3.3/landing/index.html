@@ -1,0 +1,244 @@
+<!doctype html>
+<html>
+
+<head>
+	<!--*************
+	*               *
+	*   META-DATA   *   
+	*               *
+	**************-->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="Invictus es la plataforma que transparenta el costo de la electricidad en México, mientras reduce el consumo eléctrico de sus miembros activos, aumentando la eficiencia energética de los hogares y haciendo nuestro país más sustentable." />
+	<meta name="keywords" content="invictus, consumo eléctrico, cfe, transparencia, red, smart, home"/>
+	<meta property="og:site_name" content="Invictus.mx"/>
+	<meta property="og:title" content="Invictus || Revolución Energética"/>
+	<meta property="og:type" content="website"/>
+	<meta property="og:description" content="Invictus es la plataforma que transparenta el costo de la electricidad en México, mientras reduce el consumo eléctrico de sus miembros activos, aumentando la eficiencia energética de los hogares y haciendo nuestro país más sustentable."/>
+	<meta property="og:url" content="http://www.invictus.mx"/>
+	<meta property="og:image" content="http://source.invictus.mx/img/logo/sinfondo-01.png"/>
+	<meta name="twitter:title" content="Invictus || Revolución Energética"/>
+	<meta name="twitter:image" content="http://source.invictus.mx/img/logo/sinfondo-01.png"/>
+	<meta property="twitter:description" content="Invictus es la plataforma que transparenta el costo de la electricidad en México, mientras reduce el consumo eléctrico de sus miembros activos, aumentando la eficiencia energética de los hogares y haciendo nuestro país más sustentable."/>
+	<title>Invictus || Revolución Energética</title>
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">	
+	<link rel="shortcut icon" href="img/ico/plug.png">
+	
+	<!--*************
+	*               *
+	*    POLYMER    *   
+	*               *
+	**************-->
+	
+	<!--  PLATFORM   --><script src="components/platform/platform.js"></script>
+	<!--  IMPORTS   --><link rel="import" href="imports.html">
+	
+	<!--*************
+	*               *
+	*  STYLESHEETS  *   
+	*               *
+	**************-->
+	
+	<link rel="stylesheet" href="css/style.css">
+	
+    <link rel="stylesheet" href="css/plugins/countdown.css" media="screen">
+
+</head>
+<body unresolved touch-action="auto">
+		    
+			<!-- BEGINS MAIN CONTENT -->      
+		    <div class="content" id="main_content">
+			   <polymer-element name="music-demo">
+				  <template>
+				
+				    <style>
+				      .chip-container {
+				        position: absolute;
+				        top: 365px;
+				        right: 0;
+				        left: 0;
+				        text-align: center;
+				      }
+				
+				      .chip {
+				        display: inline-block;
+				        position: relative;
+				        border-radius: 3px;
+				        margin: 4px;
+				        overflow: hidden;
+				        text-align: start;
+				        background-color: #fff;
+				        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
+				      }
+				
+				      .chip-top {
+				        width: 200px;
+				        height: 100px;
+				        cursor: pointer;
+				      }
+				
+				      .chip-bottom {
+				        padding: 8px;
+				        line-height: 1.5;
+				      }
+				
+				      .chip-album-title {
+				        font-weight: bold;
+				      }
+				
+				      #details {
+				        padding: 200px 10% 0;
+				      }
+				
+				      .card {
+				        height: 400px;
+				        border-radius: 3px;
+				        text-align: start;
+				        overflow: hidden;
+				        background: #fff;
+				        box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+				      }
+				
+				      .card-left {
+				        width: 400px;
+				      }
+				
+				      .card-right {
+				        padding: 24px;
+				      }
+				
+				      .card-icon {
+				        border-radius: 50%;
+				        width: 60px;
+				        height: 60px;
+				        margin-right: 16px;
+				      }
+				
+				      .card-album-title {
+				        font-size: 2em;
+				      }
+				    </style>
+				
+				    <core-animated-pages selected="{{page}}" transitions="hero-transition" on-core-animated-pages-transition-end="{{complete}}">
+				
+				      <section>
+				
+				        <div class="chip-container" hero-p on-tap="{{transition}}">
+				
+				          <template repeat="{{items as item}}">
+				
+				            <div class="chip" hero-id="{{item.artist}}-{{item.album}}" hero?="{{selectedAlbum === item }}">
+				              <div class="chip-top" style="background:{{item.color}};" hero-id="{{item.artist}}-{{item.album}}-art" hero?="{{selectedAlbum === item}}"></div>
+				              <div class="chip-bottom">
+				                <div class="chip-album-title">{{item.album}}</div>
+				                <div class="chip-artist">{{item.artist}}</div>
+				              </div>
+				            </div>
+				
+				          </template>
+				
+				        </div>
+				      </section>
+				
+				      <section id="details">
+				
+				        <div class="card" layout horizontal hero-id="{{selectedAlbum.artist}}-{{selectedAlbum.album}}" hero on-tap="{{transition}}">
+				          <div class="card-left" style="background:{{selectedAlbum.color}};" hero-id="{{selectedAlbum.artist}}-{{selectedAlbum.album}}-art" hero></div>
+				          <div class="card-right" flex>
+				            <div layout horizontal center>
+				              <div>
+				                <div class="card-icon" style="background:{{selectedAlbum.color}};"></div>
+				              </div>
+				              <div flex>
+				                <div class="card-album-title">{{selectedAlbum.album}}</div>
+				                <div class="card-album-artist">{{selectedAlbum.artist}}</div>
+				                <div><p>{{selectedAlbum.content}}</p></div>
+				              </div>
+				            </div>
+				          </div>
+				        </div>
+				
+				      </section>
+				
+				    </core-animated-pages>
+				
+				  </template>
+				  <script>
+				
+				    Polymer('music-demo', {
+				
+				      page: 0,
+				
+				      items: [
+				        { artist: 'Hello', album: 'Fragments', color: '#ffffff' , content: 'Lorem ipsum..'},
+				        { artist: 'Tycho', album: 'Past Prologue', color: '#972ff8' , content: 'Lorem ipsum..'},
+				        { artist: 'Tycho', album: 'Spectre', color: '#7dd6fe' , content: 'Lorem ipsum..'},
+				        { artist: 'Tycho', album: 'Awake', color: '#70C26F' , content: 'Lorem ipsum..'}
+				      ],
+				
+				      selectedAlbum: null,
+				
+				      transition: function(e) {
+				        if (this.page === 0 && e.target.templateInstance.model.item) {
+				          this.selectedAlbum = e.target.templateInstance.model.item;
+				          this.page = 1;
+				        } else {
+				          this.page = 0;
+				        }
+				      }
+				    });
+				
+				  </script>
+				  </polymer-element>
+				
+				  <div class="green"></div>
+				  
+				  <div class="countdown styled"></div>
+				   				   
+				  <div class="logo">
+					  <paper-shadow z="5">
+					  	<div class="logoInner" ></div>
+					  </paper-shadow>
+				  </div>
+				  				   				  
+				  <div class="chips"><music-demo></music-demo></div>
+				  
+				  <div class="frase" style="position:absolute;top:360px;width:100%;text-align:center;" onclick="window.open('http://google.com','_blank');">
+					  <p style="margin: 20px;  padding: 40px 20px;  border-radius: 20px;  background-color: #972FF8; color:white;">
+							De la evolución a la revolución...<br> Súmate a la nueva red de consumidores conscientes !<br><br>
+							 <paper-icon-button class="red" icon="mail" style="fill:#972FF8; padding:10px; background:white;" fill></paper-icon-button>												  
+					  </p>
+				  </div>
+				  
+				    <section>
+						 
+						 <center>
+					    <core-tooltip label='Sé de los primeros en enterarte de nuestro lanzamiento.' position="top"><div class="fab blue">
+					      <core-icon icon="mail"></core-icon>
+					      <paper-ripple class="circle recenteringTouch" fit onclick="window.open('http://google.com','_blank');"></paper-ripple>
+					    </div>
+					    </core-tooltip>
+					    </center>
+					    
+					</section>
+			
+			</div>
+			<!-- END OF MAIN CONTENT -->   
+	
+	
+<!-- JAVASCRIPT  -->
+<script src="js/main.js"></script>
+<script src="js/plugins/jquery.js"></script> 
+<script src="js/plugins/raptor/jquery.raptorize.1.0.js"></script>
+<script src="js/plugins/countdown/countdown.js"></script>
+<script src="js/plugins/countdown/jquerycountdown.js"></script>
+  <script>
+  window.onload = function() {
+  	//RAPTOR
+    $('.button').raptorize({});
+    
+    
+  };
+  </script>
+
+</body>
+</html>
