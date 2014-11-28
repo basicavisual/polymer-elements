@@ -1,0 +1,40 @@
+<!--
+@group Polymer My Elements
+@element square-element
+@author chuycepeda@gmail.com
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="square-element" attributes="__num" >
+    <template>
+    <h1>This "{{elem_name}}" has been:  <em>{{status}}</em></h1>
+    <input type="number" value="{{num}}"><br>
+    <em>{{num}}^2 = {{square}}</em>
+    <p>Value for variable: <em>{{var_name}}</em></p>
+    <p>Has been modified from: <em>{{old_val}}</em></p>
+    <p>To a new value of: <em>{{new_val}}</em></p>    
+  </template>
+  <script>
+    Polymer('square-element', {
+      status: 'created',
+      num: 2,
+      var_name: null,
+      old_val: null,
+      new_val: null,
+      elem_name:'polymer-element',
+      computed: {
+        square: 'num * num'
+      },
+      ready: function(){
+        this.status= 'prepared';
+      },
+      numChanged: function(oldVal, newVal, attrName){
+        this.var_name=attrName[2][1][0];
+        this.elem_name= attrName[2][0].localName;
+        this.old_val=oldVal;
+        this.new_val=newVal;
+      }
+    });
+   </script>
+</polymer-element>
