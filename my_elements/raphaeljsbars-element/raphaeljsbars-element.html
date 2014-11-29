@@ -1,0 +1,84 @@
+<!--
+@group Polymer My Elements
+@element raphaeljsbars-element
+@author chuycepeda@gmail.com
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<script src="raphael.js"></script>
+<script src="g.raphael.js"></script>
+<script src="g.bar.js"></script>
+
+<polymer-element name="raphaeljsbars-element" attributes="__values __title __stacked __orientation __type __prefix __suffix __hoverColumn" >
+    <template>
+        <div id="holder" style="margin-top:40px; width:100%; height: 60%;"></div>
+    </template>
+<script>
+    (function() {
+        
+        Polymer('raphaeljsbars-element', {
+          __values: [[40, 26, 5]], //be like:  [[55, 20, 13, 32, 5, 1, 2, 10], [10, 2, 1, 5, 32, 13, 20, 55]]
+          __title: "Simple bars chart",
+          __stacked: false,
+          __hoverColumn: false,
+          __type: "square", //type may be "round", "sharp", "soft" or "square"
+          __orientation: "vertical", //orientation may be 'horizontal' or 'vertical'
+          __prefix: "",
+          __suffix: "",
+          ready: function() {
+            this.loadChart();
+          },
+          loadChart: function(){
+              var r = Raphael(this.$.holder, 350, 300);
+              this.loadData(r);
+          },
+          loadData: function(r){
+                var prefix = this.__prefix, suffix = this.__suffix;
+              
+                var fin = function () { 
+                            this.flag = r.popup(this.bar.x, this.bar.y, prefix + this.bar.value.toString() + suffix || "0").insertBefore(this);
+                    },
+                    fout = function () {
+                        this.flag.animate({opacity: 0}, 300, function () {this.remove();});
+                    },
+                    fin2 = function () {
+                        var y = [], res = [];
+                        for (var i = this.bars.length; i--;) {
+                            y.push(this.bars[i].y);
+                            res.push(prefix + this.bars[i].value.toString() + suffix || "0");
+                        }
+                        this.flag = r.popup(this.bars[0].x, Math.min.apply(Math, y), res.join(", ")).insertBefore(this);
+                    },
+                    fout2 = function () {
+                        this.flag.animate({opacity: 0}, 300, function () {this.remove();});
+                    },
+                    txtattr = { font: "12px roboto" };
+              
+                //Chart title
+                r.text(160, 10, this.__title).attr(txtattr);
+              
+                //Chart data
+                if (this.__orientation == 'vertical'){
+                  if (this.__values.length > 1)
+                    if (this.__hoverColumn)
+                        r.barchart(10, 25, 300, 220, this.__values, {stacked: this.__stacked, type: this.__type}).hoverColumn(fin2, fout2);
+                    else
+                        r.barchart(10, 25, 300, 220, this.__values, {stacked: this.__stacked, type: this.__type}).hover(fin, fout);
+                  else 
+                    r.barchart(10, 25, 300, 220, this.__values, {stacked: this.__stacked, type: this.__type}).hover(fin, fout);              
+                }else {
+                  if (this.__values.length > 1)
+                    if (this.__hoverColumn)
+                        r.hbarchart(10, 25, 300, 220, this.__values, {stacked: this.__stacked, type: this.__type}).hoverColumn(fin2, fout2);
+                    else
+                        r.hbarchart(10, 25, 300, 220, this.__values, {stacked: this.__stacked, type: this.__type}).hover(fin, fout);
+                  else 
+                    r.hbarchart(10, 25, 300, 220, this.__values, {stacked: this.__stacked, type: this.__type}).hover(fin, fout);
+                }
+              
+          }
+        });
+        })();
+  
+</script>
+</polymer-element>

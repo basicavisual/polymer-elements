@@ -1,13 +1,14 @@
 <!--
 @group Polymer My Elements
-@element highcharts-element
+@element raphaeljspie-element
 @author chuycepeda@gmail.com
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <script src="raphael.js"></script>
-<polymer-element name="raphaeljspie-element" attributes="__values __labels" >
+<polymer-element name="raphaeljspie-element" attributes="__values __labels __radius __title" >
     <template>
+        <center><h1 style="color:#bab5b5; font-family:roboto-thin;">{{__title}}</h1></center>
         <div id="holder"></div>
     </template>
 <script>
@@ -32,7 +33,7 @@
                                 popangle = angle + (angleplus / 2),
                                 color = Raphael.hsb(start, .75, 1),
                                 ms = 500,
-                                delta = 30,
+                                delta = 1,
                                 bcolor = Raphael.hsb(start, 1, 1),
                                 p = sector(cx, cy, r, angle, angle + angleplus, {fill: "90-" + bcolor + "-" + color, stroke: stroke, "stroke-width": 3}),
                                 txt = paper.text(cx + (r + delta + 55) * Math.cos(-popangle * rad), cy + (r + delta + 25) * Math.sin(-popangle * rad), labels[j]).attr({fill: bcolor, stroke: "none", opacity: 0, "font-size": 20});
@@ -59,11 +60,14 @@
         Polymer('raphaeljspie-element', {
           __values: [40, 26, 5],
           __labels: ["Ruby", "JavaScript", "Python"],
+          __radius: 350,
+          __title: "Simple pie",
           ready: function() {
             this.loadChart();
           },
           loadChart: function(){
-              Raphael(this.$.holder, 700, 700).pieChart(350, 350, 200, this.__values, this.__labels, "#fff");
+              var r= parseInt(this.__radius), c = parseInt(this.__radius*0.5), e = parseInt(this.__radius*0.25);
+              Raphael(this.$.holder, r, r).pieChart(c, c, e, this.__values, this.__labels, "#fff");
           }
         });
         })();

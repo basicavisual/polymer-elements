@@ -10,6 +10,9 @@
         <script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
         <style>
+            code {
+              color: #007000;
+            }
             body:before {
             content: "";
             position: fixed;
@@ -54,6 +57,8 @@
 	</head>
 	<body>
         <img src="https://www.polymer-project.org/images/logos/p-logo.svg" style="max-width:100%;height:auto;"><br>
+        <p>This is a simple <code>highcharts-element</code>, a way to multiple HighchartsJS charts... unfortunately it's buggy for some charts.</p>
+        
         <ul id="sortable">
             
             <li class="ui-state-default"><highcharts-element class="card full" __type="pie" __enable3D="false" __title="Fruit Delivery 2" __subtitle="Highchart Polymer Element " __data='{"name": "Delivered amount","data": [["Bananas", 8],["Kiwi", 3],["Mixed nuts", 1],["Oranges", 6],["Apples", 8],["Pears", 4],["Clementines", 4],["Reddish (bag)", 1],["Grapes (bunch)", 1]]}'></highcharts-element></li>

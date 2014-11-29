@@ -6,6 +6,9 @@
         <script src="../../bower_components/webcomponentsjs/webcomponents.js"></script>
         <link rel="import" href="square-element.html">
         <style>
+            code {
+              color: #007000;
+            }
             body:before {
             content: "";
             position: fixed;
@@ -40,6 +43,7 @@
 	</head>
 	<body>
         <img src="https://www.polymer-project.org/images/logos/p-logo.svg" style="max-width:100%;height:auto;"><br>
+        <p>This is the <code>square-element</code>, a didactic element to show you how to use Polymer properties such as: attrChanged, computed properties, lifecycle methods, and data binding.</p>
         <square-element class="card full" num="4"></square-element>
 	</body>
 </html>
