@@ -1,6 +1,6 @@
 ![image](https://www.polymer-project.org/images/logos/lockup.svg)
 
-Welcome to polymer-elements: Polymer core-elements + paper-elements + my-elements
+Welcome to polymer-elements
 ===
 
 
