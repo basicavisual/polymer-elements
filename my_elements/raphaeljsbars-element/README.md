@@ -1,4 +1,4 @@
-raphaeljspie-element
+raphaeljsbars-element
 =========
 
-See the [example page](http://raphaeljs.com/pie.html) for more information.
+See the [example page](http://g.raphaeljs.com/barchart.html) for more information.
