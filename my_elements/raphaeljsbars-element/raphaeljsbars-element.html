@@ -8,8 +8,32 @@
 <script src="raphael.js"></script>
 <script src="g.raphael.js"></script>
 <script src="g.bar.js"></script>
-
-<polymer-element name="raphaeljsbars-element" attributes="__values __title __stacked __orientation __type __prefix __suffix __joinTooltip __colors __width __height __proportion" >
+<style>
+.animated {
+  animation: kaboom 5s ease alternate infinite;
+  &:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+  &:nth-child(3) {
+    animation-delay: 0.2s;
+  }
+  &:nth-child(4) {
+    animation-delay: 0.3s;
+  }
+  &:nth-child(5) {
+    animation-delay: 0.4s;
+  }
+}
+@keyframes kaboom {
+  90% {
+    transform: scale(1.0);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+</style>
+<polymer-element name="raphaeljsbars-element" attributes="__values __title __stacked __orientation __type __prefix __suffix __joinTooltip __colors __width __height __proportion __easing" >
     <template>
         <div id="holder" style="margin-top:40px; width:100%; height: 60%;"></div>
     </template>
@@ -28,6 +52,14 @@
           __width: 300,
           __height: 220,
           __proportion: 1,
+                //                “linear”
+                //“<” or “easeIn” or “ease-in”
+                //“>” or “easeOut” or “ease-out”
+                //“<>” or “easeInOut” or “ease-in-out”
+                //“backIn” or “back-in”
+                //“backOut” or “back-out”
+                //“elastic”
+          __easing: "",
           ready: function() {
             if (this.__width > window.innerWidth) this.__width = window.innerWidth*0.8;
             this.loadChart();
@@ -41,7 +73,7 @@
                 var prefix = this.__prefix, suffix = this.__suffix;
               
                 var fin = function () { 
-                            this.flag = r.popup(this.bar.x, this.bar.y, prefix + this.bar.value.toString() + suffix || "0").insertBefore(this);
+                            this.flag = r.popup(this.bar.x, this.bar.y, prefix + this.bar.value.toString() + suffix || "0").attr({fill: "#000", stroke: "white", "stroke-width": 1, "fill-opacity": .7}).insertBefore(this);
                     },
                     fout = function () {
                         this.flag.animate({opacity: 0}, 300, function () {this.remove();});
@@ -52,7 +84,7 @@
                             y.push(this.bars[i].y);
                             res.push(prefix + this.bars[i].value.toString() + suffix || "0");
                         }
-                        this.flag = r.popup(this.bars[0].x, Math.min.apply(Math, y), res.join(", ")).insertBefore(this);
+                        this.flag = r.popup(this.bars[0].x, Math.min.apply(Math, y), res.join(", ")).attr({fill: "#000", stroke: "white", "stroke-width": 1, "fill-opacity": .7}).insertBefore(this);
                     },
                     fout2 = function () {
                         this.flag.animate({opacity: 0}, 300, function () {this.remove();});
@@ -61,24 +93,39 @@
               
                 //Chart title
                 r.text(this.__width/2, 10, this.__title).attr(txtattr);
-              
-                //Chart data
+                var _r;
+                //Chart data 
                 if (this.__orientation == 'vertical'){
                   if (this.__values.length > 1)
                     if (this.__joinTooltip)
-                        r.barchart(10, 25, this.__width, this.__height, this.__values, {stacked: this.__stacked, type: this.__type, colors: this.__colors}).hoverColumn(fin2, fout2);
+                        _r = r.barchart(10, 25, this.__width, this.__height, this.__values, {stacked: this.__stacked, type: this.__type, colors: this.__colors}).hoverColumn(fin2, fout2);
                     else
-                        r.barchart(10, 25, this.__width, this.__height, this.__values, {stacked: this.__stacked, type: this.__type, colors: this.__colors}).hover(fin, fout);
+                        _r = r.barchart(10, 25, this.__width, this.__height, this.__values, {stacked: this.__stacked, type: this.__type, colors: this.__colors}).hover(fin, fout);
                   else 
-                    r.barchart(10, 25, this.__width, this.__height, this.__values, {stacked: this.__stacked, type: this.__type, colors: this.__colors}).hover(fin, fout);              
+                    _r = r.barchart(10, 25, this.__width, this.__height, this.__values, {stacked: this.__stacked, type: this.__type, colors: this.__colors}).hover(fin, fout);              
                 }else {
                   if (this.__values.length > 1)
                     if (this.__joinTooltip)
-                        r.hbarchart(10, 25, this.__width, this.__height, this.__values, {stacked: this.__stacked, type: this.__type, colors: this.__colors}).hoverColumn(fin2, fout2);
+                        _r = r.hbarchart(10, 25, this.__width, this.__height, this.__values, {stacked: this.__stacked, type: this.__type, colors: this.__colors}).hoverColumn(fin2, fout2);
                     else
-                        r.hbarchart(10, 25, this.__width, this.__height, this.__values, {stacked: this.__stacked, type: this.__type, colors: this.__colors}).hover(fin, fout);
+                        _r = r.hbarchart(10, 25, this.__width, this.__height, this.__values, {stacked: this.__stacked, type: this.__type, colors: this.__colors}).hover(fin, fout);
                   else 
-                    r.hbarchart(10, 25, this.__width, this.__height, this.__values, {stacked: this.__stacked, type: this.__type, colors: this.__colors}).hover(fin, fout);
+                    _r = r.hbarchart(10, 25, this.__width, this.__height, this.__values, {stacked: this.__stacked, type: this.__type, colors: this.__colors}).hover(fin, fout);
+                }
+                
+                if (this.__easing != ""){
+                    _r.animate({transform: 's0'}, 10, 'elastic');
+                    setTimeout(function(){_r.animate({transform: 's1.0'}, 600, this.__easing);}, 100);
+                    
+                    var _o = this.__orientation;
+                    _r.mouseover(function () {
+                        if (_o == 'vertical')
+                                _r.animate({transform: "s1.1 1.0"}, 600, "ease-in");
+                        else
+                                _r.animate({transform: "s1.0 1.1"}, 600, "ease-in");
+                    }).mouseout(function () {
+                        _r.animate({transform: ""}, 600, "ease-out");
+                    });
                 }
               
           },
