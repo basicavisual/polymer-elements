@@ -1,38 +1,23 @@
 <!--
-@group Polymer My Elements
+Element providing solution to easy creation of SVG bars charts using RaphaelJS library.
+
+##### Example
+
+    <raphaeljsbars-element></raphaeljsbars-element>
+
 @element raphaeljsbars-element
-@author chuycepeda@gmail.com
+@blurb Element providing solution to easy creation of SVG bars charts using RaphaelJS library.
+@status alpha
+@homepage https://github.com/chuycepeda/polymer-elements/tree/master/my_elements/raphaeljsbars-element
 -->
+
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <script src="raphael.js"></script>
 <script src="g.raphael.js"></script>
 <script src="g.bar.js"></script>
-<style>
-.animated {
-  animation: kaboom 5s ease alternate infinite;
-  &:nth-child(2) {
-    animation-delay: 0.1s;
-  }
-  &:nth-child(3) {
-    animation-delay: 0.2s;
-  }
-  &:nth-child(4) {
-    animation-delay: 0.3s;
-  }
-  &:nth-child(5) {
-    animation-delay: 0.4s;
-  }
-}
-@keyframes kaboom {
-  90% {
-    transform: scale(1.0);
-  }
-  100% {
-    transform: scale(1.1);
-  }
-}
-</style>
+
+
 <polymer-element name="raphaeljsbars-element" attributes="__values __title __stacked __orientation __type __prefix __suffix __joinTooltip __colors __width __height __proportion __easing" >
     <template>
         <div id="holder" style="margin-top:40px; width:100%; height: 60%;"></div>
@@ -40,35 +25,133 @@
 <script>
     (function() {
         Polymer('raphaeljsbars-element', {
-          __values: [[40, 26, 5]], //be like:  [[55, 20, 13, 32, 5, 1, 2, 10], [10, 2, 1, 5, 32, 13, 20, 55]]
+          /**
+           * The `values` attribute sets an initial array of values for the bars. One series [[40, 26, 5]], two series [[40, 26, 5],[40, 26, 5]], etc.
+           *
+           * @attribute __values
+           * @type array of arrays numbers
+           * @default '[[40, 26, 5]]'
+           */
+          __values: [[40, 26, 5]], 
+          /**
+           * The `title` attribute sets the title (if any) for the bars chart
+           *
+           * @attribute __title
+           * @type string
+           * @default 'Simple bars chart'
+           */
           __title: "Simple bars chart",
+          /**
+           * The `stacked` attribute sets if multiple series should be stacked or not
+           *
+           * @attribute __stacked
+           * @type bool
+           * @default 'false'
+           */
           __stacked: false,
+          /**
+           * The `joinTooltip` attribute sets if a stacked bars chart should display a unique joined tooltip or not.
+           *
+           * @attribute __joinTooltip
+           * @type bool
+           * @default 'false'
+           */
           __joinTooltip: false,
-          __type: "square", //type may be "round", "sharp", "soft" or "square"
-          __orientation: "vertical", //orientation may be 'horizontal' or 'vertical'
+          /**
+           * The `type` attribute sets the style of edges for the bars chart. It can be: "round", "sharp", "soft" or "square".
+           *
+           * @attribute __type
+           * @type string
+           * @default 'square'
+           */
+          __type: "square",
+          /**
+           * The `orientation` attribute sets if bars chart should be vertical or horizontal
+           *
+           * @attribute __orientation
+           * @type string
+           * @default 'vertical'
+           */
+          __orientation: "vertical",
+          /**
+           * The `prefix` attribute sets the prefix for the tooltip.
+           *
+           * @attribute __prefix
+           * @type string
+           * @default ''
+           */
           __prefix: "",
+          /**
+           * The `suffix` attribute sets the suffix for the tooltip.
+           *
+           * @attribute __suffix
+           * @type string
+           * @default ''
+           */
           __suffix: "",
+          /**
+           * The `colors` attribute sets the color for each series.
+           *
+           * @attribute __colors
+           * @type array of css colors
+           * @default '["blue","lightgreen","red"]'
+           */
           __colors: ["blue","lightgreen","red"],
+          /**
+           * The `width` attribute sets the width of the chart
+           *
+           * @attribute __width
+           * @type integer
+           * @default '300'
+           */
           __width: 300,
+          /**
+           * The `height` attribute sets the height of the chart
+           *
+           * @attribute __height
+           * @type integer
+           * @default '220'
+           */
           __height: 220,
+          /**
+           * The `proportion` attribute is used to detect a width change in the screen.  If this value is used you can ensure a pie that is always between 1280px and 300px with a proportion of 80% of screen width.
+           *
+           * @attribute __proportion
+           * @type number
+           * @default '1'
+           */
           __proportion: 1,
-                //                “linear”
-                //“<” or “easeIn” or “ease-in”
-                //“>” or “easeOut” or “ease-out”
-                //“<>” or “easeInOut” or “ease-in-out”
-                //“backIn” or “back-in”
-                //“backOut” or “back-out”
-                //“elastic”
+          /**
+           * The `easing` attribute sets the type of animation that a bars do when loaded and on mouseover. If blank, charts will be static, so you should look for: 'linear', 'ease-in', 'ease-out', 'ease-in-out', 'back-in', 'back-out', or 'elastic' to bring bars to life. 
+           *
+           * @attribute __easing
+           * @type string
+           * @default ''
+           */
           __easing: "",
           ready: function() {
             if (this.__width > window.innerWidth) this.__width = window.innerWidth*0.8;
             this.loadChart();
           },
+          /**
+           * The `loadChart` method generates the RaphaelJS bars chart object.
+           *
+           * @method loadChart
+           * @param {} no paratemer needed.
+           * @return {} no return given.
+           */
           loadChart: function(){
               this.$.holder.innerHTML ="";
               var r = Raphael(this.$.holder, parseInt(this.__width*1.2), parseInt(this.__height*1.3));
               this.loadData(r);
           },
+          /**
+           * The `loadData` method populates the RaphaelJS bars chart.
+           *
+           * @method loadData
+           * @param {Object} A RaphaelJS object.
+           * @return {} no return given.
+           */
           loadData: function(r){
                 var prefix = this.__prefix, suffix = this.__suffix;
               
@@ -114,21 +197,28 @@
                 }
                 
                 if (this.__easing != ""){
-                    _r.animate({transform: 's0'}, 10, 'elastic');
+                    _r.animate({transform: 's0'}, 10, this.__easing);
                     setTimeout(function(){_r.animate({transform: 's1.0'}, 600, this.__easing);}, 100);
                     
                     var _o = this.__orientation;
                     _r.mouseover(function () {
                         if (_o == 'vertical')
-                                _r.animate({transform: "s1.1 1.0"}, 600, "ease-in");
+                                _r.animate({transform: "s1.1 1.0"}, 600, this.__easing);
                         else
-                                _r.animate({transform: "s1.0 1.1"}, 600, "ease-in");
+                                _r.animate({transform: "s1.0 1.1"}, 600, this.__easing);
                     }).mouseout(function () {
                         _r.animate({transform: ""}, 600, "ease-out");
                     });
                 }
               
           },
+          /**
+           * The `proportionChanged` method returns the RaphaelJS bars chart with a scaled version of 80% screen width.
+           *
+           * @method proportionChanged
+           * @param {} no paratemer needed.
+           * @return {} no return given.
+           */
           __proportionChanged: function(){ 
               this.__width = window.innerWidth*0.8;
               if (this.__width > 1280) this.__width = 1280; 

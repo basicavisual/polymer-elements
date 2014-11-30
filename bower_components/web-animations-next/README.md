@@ -35,14 +35,14 @@ effect.
     <div class="pulse" style="width:150px;">Hello world!</div>
     <script>
         var elem = document.querySelector('.pulse');
-        var player = document.timeline.play(new Animation(elem, [
+        var player = elem.animate([
             {opacity: 0.5, transform: "scale(0.5)"},
             {opacity: 1.0, transform: "scale(1)"}
         ], {
-            direction: "alternate",
+            direction: 'alternate',
             duration: 500,
             iterations: Infinity
-        }));
+        });
     </script>
 
 Web Animations supports off-main-thread animations, and also allows procedural
@@ -147,12 +147,13 @@ Report any issues with this implementation on GitHub:
 Breaking changes
 ----------------
 
-When we make a potentially breaking change to the polyfill's API surface (like
-a rename) we'll continue supporting the old version, deprecated, for three
-months, and ensure that there are console warnings to indicate that a change is
-pending. After three months, the old version of the API surface (e.g. the old
-version of a function name) will be removed. If you see deprecation warnings
-you can't avoid it by not updating.
+When we make a potentially breaking change to the polyfill's API
+surface (like a rename) where possible we will continue supporting the
+old version, deprecated, for three months, and ensure that there are
+console warnings to indicate that a change is pending. After three
+months, the old version of the API surface (e.g. the old version of a
+function name) will be removed. *If you see deprecation warnings you
+can't avoid it by not updating*.
 
 We also announce anything that isn't a bug fix on
 [web-animations-changes@googlegroups.com](https://groups.google.com/forum/#!forum/web-animations-changes).

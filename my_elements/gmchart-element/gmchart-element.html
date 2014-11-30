@@ -1,46 +1,25 @@
+
+<!--
+This element is a modified version of `google-chart` to produce Material Design Google Charts.
+
+##### Example
+
+    <gmchart-element class="card full"
+    options='{"title": "Simple Chart"}'
+    cols='[{"label": "Data", "type": "string"},{"label": "Value", "type": "number"},{"label": "Value 2", "type": "number"}, {"label": "Value 3", "type": "number"}]'
+    rows='[["Something", 1 , 2, 3]]'></gmchart-element>
+
+@element gmchart-element
+@blurb This element is a modified version of `google-chart` to produce Material Design Google Charts.
+@status alpha
+@homepage https://github.com/chuycepeda/polymer-elements/tree/master/my_elements/gmchart-element
+-->
+
+
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/core-ajax/core-ajax.html">
 <link rel="import" href="../../bower_components/google-apis/google-jsapi.html">
 
-<!--
-`google-chart` encapsulates Google Charts as a web component, allowing you to easily visualize
-data. From simple line charts to complex hierarchical tree maps, the chart element provides a
-number of ready-to-use chart types.
-
-    <google-chart
-      type='pie'
-      options='{"title": "Distribution of days in 2001Q1"}'
-      cols='[{"label":"Month", "type":"string"}, {"label":"Days", "type":"number"}]'
-      rows='[["Jan", 31],["Feb", 28],["Mar", 31]]'>
-    </google-chart>
-
-Height and width are specified as style attributes:
-
-    google-chart {
-      height: 300px;
-      width: 50em;
-    }
-
-Data can be provided in one of three ways:
-
-- Via the `cols` and `rows` attributes:
-
-      cols='[{"label":"Mth", "type":"string"}, {"label":"Days", "type":"number"}]'
-      rows='[["Jan", 31],["Feb", 28],["Mar", 31]]'
-
-- Via the `data` attribute, passing in the data directly:
-
-      data='[["Month", "Days"], ["Jan", 31], ["Feb", 28], ["Mar", 31]]'
-
-- Via the `data` attribute, passing in the URL to a resource containing the
-  data, in JSON format:
-
-      data='http://example.com/chart-data.json'
-
-@element google-chart
-@status alpha
-@homepage http://googlewebcomponents.github.io/google-chart
--->
 <polymer-element name="gmchart-element" attributes="type width height options cols rows data">
 
   <template>

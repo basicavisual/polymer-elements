@@ -1,7 +1,14 @@
 <!--
-@group Polymer My Elements
+Element providing solution to easy creation of AsterPlot visualization using d3.js library.
+
+##### Example
+
+    <d3asterplot-element></d3asterplot-element>
+
 @element d3asterplot-element
-@author chuycepeda@gmail.com
+@blurb Element providing solution to easy creation of AsterPlot visualization using d3.js library.
+@status alpha
+@homepage https://github.com/chuycepeda/polymer-elements/tree/master/my_elements/d3asterplot-element
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
@@ -48,7 +55,6 @@
   border-radius: 2px;
 }
 
-/* Creates a small triangle extender for the tooltip */
 .d3-tip:after {
   box-sizing: border-box;
   display: inline;
@@ -61,7 +67,6 @@
   text-align: center;
 }
 
-/* Style northward tooltips differently */
 .d3-tip.n:after {
   margin: -1px 0 0 0;
   top: 100%;
@@ -79,8 +84,24 @@
 (function() {
     
     Polymer('d3asterplot-element', {
-      __title: "d3.js AsterPlot",
-      __values: [{"score":59,"weight":0.5,"color":"#9E0041","label":"Fisheries"},
+          /**
+           * The `title` attribute sets the title for the chart.
+           *
+           * @attribute __title
+           * @type string
+           * @default 'd3.js AsterPlot'
+           */
+          __title: "d3.js AsterPlot",
+          /**
+           * The `values` attribute sets an array of values for chart.
+           *
+           * @attribute __values
+           * @type array of objects
+           * Example:
+             * <pre>[{"score":59,"weight":0.5,"color":"#9E0041","label":"Fisheries"},
+                 {"score":24,"weight":0.5,"color":"#C32F4B","label":"Mariculture"},...]</pre>
+           */
+          __values: [{"score":59,"weight":0.5,"color":"#9E0041","label":"Fisheries"},
                  {"score":24,"weight":0.5,"color":"#C32F4B","label":"Mariculture"},
                  {"score":98,"weight":1,"color":"#E1514B","label":"Artisanal fishing"},
                  {"score":60,"weight":1,"color":"#F47245","label":"Natural products"},
@@ -94,12 +115,40 @@
                  {"score":71,"weight":1,"color":"#4D9DB4","label":"Clean waters"},
                  {"score":88,"weight":0.5,"color":"#4776B4","label":"Habitats"},
                  {"score":83,"weight":0.5,"color":"#5E4EA1","label":"Species"}],
-      __radius:300,
-      __showAvg:true,
-      __proportion:1,
+          /**
+           * The `radius` attribute sets the radius of the chart.
+           *
+           * @attribute __radius
+           * @type integer
+           * @default '300'
+           */
+          __radius:300,
+          /**
+           * The `showAvg` attribute sets the option for showing or removing the weighted average.
+           *
+           * @attribute __showAvg
+           * @type bool
+           * @default 'true'
+           */
+          __showAvg:true,
+          /**
+           * The `proportion` attribute is used to detect a width change in the screen. If this value is used you can ensure a responsive chart.
+           *
+           * @attribute __proportion
+           * @type number
+           * @default '1'
+           */
+          __proportion:1,
       ready: function() {
         this.loadChart();
       },
+      /**
+       * The `loadChart` method create the AsterPlot.
+       *
+       * @method loadChart
+       * @param {} no paratemer needed.
+       * @return {} no return given.
+       */
       loadChart: function(){
             var width = this.__radius*this.__proportion,
                 height = this.__radius*this.__proportion,
@@ -183,6 +232,13 @@
 
             //});
       },
+      /**
+       * The `proportionChanged` method reloads the chart according to the initial and current screen width.
+       *
+       * @method proportionChanged
+       * @param {} no paratemer needed.
+       * @return {} no return given.
+       */
       __proportionChanged: function(){ this.loadChart();}
     });
     })();

@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>RaphaelJS Bars Component</title>
+		<title>raphaeljsbars-element Demo</title>
         <script src="../../bower_components/webcomponentsjs/webcomponents.js"></script>
         <link rel="import" href="raphaeljsbars-element.html">
         <style>
@@ -66,6 +66,17 @@
             __prefix=""
             __suffix=""
             __colors="['red']">
+        </raphaeljsbars-element>
+        
+        <raphaeljsbars-element class="card full"
+            __values="[[55],[20],[15]]" 
+            __title="Each bar a color? Easy.."
+            __stacked="false"
+            __orientation="vertical"
+            __type="square"
+            __prefix=""
+            __suffix=""
+            __colors="['#ff0000', '#00ff00','#0000ff']">
         </raphaeljsbars-element>
         
         <raphaeljsbars-element class="card full"
@@ -142,7 +153,7 @@
             __colors="['crimson','red','tomato']"
             __joinTooltip="true"
             __width="2600"
-            __easing="elastic">
+            __easing="ease-in-out">
         </raphaeljsbars-element>
         
         <script>

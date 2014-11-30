@@ -1,11 +1,21 @@
 <!--
-@group Polymer My Elements
+Element providing solution to easy creation of SVG pie charts using RaphaelJS library.
+
+##### Example
+
+    <raphaeljspie-element></raphaeljspie-element>
+
 @element raphaeljspie-element
-@author chuycepeda@gmail.com
+@blurb Element providing solution to easy creation of SVG pie charts using RaphaelJS library.
+@status alpha
+@homepage https://github.com/chuycepeda/polymer-elements/tree/master/my_elements/raphaeljspie-element
 -->
+
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <script src="raphael.js"></script>
+
+
 <polymer-element name="raphaeljspie-element" attributes="__values __labels __radius __title __proportion" >
     <template>
         <center><h1 style="color:#bab5b5; font-family:roboto-thin;">{{__title}}</h1></center>
@@ -58,15 +68,57 @@
                     return chart;
         };
         Polymer('raphaeljspie-element', {
+          /**
+           * The `values` attribute sets an initial array of values for the pie
+           *
+           * @attribute __values
+           * @type array of numbers
+           * @default '[40, 26, 5]'
+           */    
           __values: [40, 26, 5],
+          /**
+           * The `labels` attribute sets an initial array of labels for the pie
+           *
+           * @attribute __labels
+           * @type array of strings
+           * @default '["Ruby", "JavaScript", "Python"]'
+           */  
           __labels: ["Ruby", "JavaScript", "Python"],
+          /**
+           * The `radius` attribute sets the radius of the pie, if bigger than screen it uses 75% of width.
+           *
+           * @attribute __radius
+           * @type integer
+           * @default '350'
+           */
           __radius: 350,
+          /**
+           * The `title` attribute sets the title for the pie
+           *
+           * @attribute __title
+           * @type string
+           * @default 'Simple pie'
+           */
           __title: "Simple pie",
+          /**
+           * The `proportion` attribute is used to detect a width change in the screen.  If this value is used you can ensure a pie that is always between 600px and 300px with a proportion of 80% of screen width.
+           *
+           * @attribute __proportion
+           * @type number
+           * @default '1'
+           */
           __proportion: 1,
           ready: function() {
             if (this.__radius > window.innerWidth) this.__radius = window.innerWidth*0.75;
             this.loadChart();
           },
+          /**
+           * The `loadChart` method creates the RaphaelJS pie chart.
+           *
+           * @method loadChart
+           * @param {} no paratemer needed.
+           * @return {} no return given.
+           */
           loadChart: function(){
               var r= parseInt(this.__radius), c = parseInt(this.__radius*0.5), e = parseInt(this.__radius*0.25);
               this.$.holder.innerHTML = "";
@@ -75,6 +127,13 @@
               this.$.holder.style.marginBottom = margin.toString() + "px";
               Raphael(this.$.holder, r, r).pieChart(c, c, e, this.__values, this.__labels, "#fff");
           },
+          /**
+           * The `proportionChanged` method returns the RaphaelJS pie chart with a scaled version of 80% screen width.
+           *
+           * @method proportionChanged
+           * @param {} no paratemer needed.
+           * @return {} no return given.
+           */
           __proportionChanged: function(){
               this.__radius = window.innerWidth*0.8;
               if ( this.__radius > 600 ) this.__radius == 600;

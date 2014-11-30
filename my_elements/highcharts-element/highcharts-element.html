@@ -1,7 +1,14 @@
 <!--
-@group Polymer My Elements
-@element highcharts-element
-@author chuycepeda@gmail.com
+Element providing solution to easy creation of multiple charts using HighchartsJS library.
+
+##### Example
+
+    <highcharts-element __type="pie" __data='{"name": "Delivered amount","data": [["Bananas", 8],["Kiwi", 3],["Mixed nuts", 1],["Oranges", 6],["Apples", 8],["Pears", 4],["Clementines", 4],["Reddish (bag)", 1],["Grapes (bunch)", 1]]}'></highcharts-element>
+
+@element higcharts-element
+@blurb Element providing solution to easy creation of of multiple charts using HighchartsJS library. Unfortunately it still presents a buggy behavior for some types of charts. Wanna help ?
+@status alpha
+@homepage https://github.com/chuycepeda/polymer-elements/tree/master/my_elements/highcharts-element
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
@@ -13,22 +20,120 @@
 <script>
     Polymer('highcharts-element', {
       chart: null,
+      /**
+       * The `type` attribute sets the kind chart to be created, be sure to match it with the format of your data.
+       *
+       * @attribute __type
+       * @type string
+       * @default 'line'
+       */
       __type: 'line',
+      /**
+       * The `data` attribute sets the chart series to be added, follow highcharts addSeries method: http://api.highcharts.com/highcharts#Chart.addSeries .
+       *
+       * @attribute __data
+       * @type object
+       * @default 'null'
+       */
       __data: null,
+      /**
+       * The `enable3D` attribute sets the HighchartsJS 3D option.
+       *
+       * @attribute __enable3D
+       * @type string
+       * @default 'false'
+       */
       __enable3D: 'false',
-      __title: '',
-      __subtitle: '',
+      /**
+       * The `title` attribute sets the chart title.
+       *
+       * @attribute __title
+       * @type string
+       * @default 'Fruit delivery'
+       */
+      __title: 'Fruit delivery',
+      /**
+       * The `subtitle` attribute sets the chart subtitle.
+       *
+       * @attribute __subtitle
+       * @type string
+       * @default 'Polymer fruits giveaway'
+       */
+      __subtitle: 'Polymer fruits giveaway',
+      /**
+       * The `animation` attribute sets the option for animated tooltip.
+       *
+       * @attribute __animation
+       * @type string
+       * @default 'true'
+       */
       __animation: 'true',
+      /**
+       * The `crosshairX` attribute sets the crosshair for X axis.
+       *
+       * @attribute __crosshairX
+       * @type string
+       * @default 'false'
+       */
       __crosshairX: 'false',
+      /**
+       * The `crosshairY` attribute sets the crosshair for Y axis.
+       *
+       * @attribute __crosshairY
+       * @type string
+       * @default 'false'
+       */
       __crosshairY: 'false',
+      /**
+       * The `layout` attribute sets the layout for the chart legend. It can be horizontal or vertical
+       *
+       * @attribute __layout
+       * @type string
+       * @default 'horizontal'
+       */
       __layout: 'horizontal',
+      /**
+       * The `backgroundColor` attribute sets background color for the legend.
+       *
+       * @attribute __backgroundColor
+       * @type string
+       * @default '#FFFFFF'
+       */
       __backgroundColor: '#FFFFFF',
+      /**
+       * The `legendHAlign` attribute sets the option for legend horizontal positioning: center, left, right.
+       *
+       * @attribute __legendHAlign
+       * @type string
+       * @default 'center'
+       */
       __legendHAlign: 'center',
+      /**
+       * The `legendVAlign` attribute sets the option for legend horizontal positioning: top, middle, bottom.
+       *
+       * @attribute __legendVAlign
+       * @type string
+       * @default 'bottom'
+       */
       __legendVAlign: 'bottom',
+      /**
+       * The `gradient` attribute sets the color options to be a gradient.
+       *
+       * @attribute __gradient
+       * @type string
+       * @default 'true'
+       */
       __gradient: 'true',
       ready: function() {
         this.loadChart();
       },
+      /**
+       * The `loadChart` method will create the HighchartsJS chart.
+       *
+       * @method loadChart
+       * @param {} no parameter.
+       * @return {} no return given.
+       */     
       loadChart: function(){
         var opts = this.chartOptions;
         this.optionsUpdate();  
@@ -79,6 +184,13 @@
             verticalAlign: this.legendVAlign
         }
       },
+      /**
+       * The `optionsUpdate` method sets the options for the rendered chart.
+       *
+       * @method optionsUpdate
+       * @param {} no parameter.
+       * @return {} no return given.
+       */     
       optionsUpdate: function(){
         this.chartOptions.chart.type = this.__type;
         if (this.__type == 'donut'){
@@ -99,10 +211,15 @@
         this.chartOptions.legend.layout =  this.__layout; 
         this.chartOptions.legend.backgroundColor =  this.__backgroundColor; 
         this.chartOptions.legend.align = this.__legendHAlign;  
-        this.chartOptions.legend.verticalAlign = this.__legendVAlign;
-          
-          
+        this.chartOptions.legend.verticalAlign = this.__legendVAlign;     
       },
+      /**
+       * The `addData` method adds the addSeries HighchartsJS method for each series in data.
+       *
+       * @method addData
+       * @param {} no parameter.
+       * @return {} no return given.
+       */     
       addData: function(){
         var _data = this.__data.split('},').reduce(
           function(previousValue, currentValue, i, a) {
@@ -116,6 +233,13 @@
            else
             this.chart.addSeries(JSON.parse(_data[i]));   
       },
+      /**
+       * The `doGradient` method transforms colors into gradients.
+       *
+       * @method doGradient
+       * @param {} no parameter.
+       * @return {} no return given.
+       */     
       doGradient: function (){
         this.chartOptions.colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
                 return {

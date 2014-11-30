@@ -1,19 +1,19 @@
 {
-  "name": "square-element",
+  "name": "seed-element",
   "version": "0.0.0",
   "authors": [
-    "chuycepeda <chuycepeda@gmail.com>"
+    "Anonymous <anonymous@example.com>"
   ],
-  "description": "Element providing a didactic explanation of possibilities using polymer elements.",
+  "description": "Element providing solution to no problem in particular, use it to create your own structured components.",
   "keywords": [
     "web-component",
     "web-components",
     "polymer",
     "seed"
   ],
-  "main": "square-element.html",
+  "main": "seed-element.html",
   "license": "MIT",
-  "homepage": "https://github.com/chuycepeda/polymer-elements/tree/master/my_elements/square-element",
+  "homepage": "https://github.com/<USERNAME>/seed-element/",
   "ignore": [
     "/.*",
     "/tests/"
