@@ -50,11 +50,22 @@
           __labels='["Ruby", "JS", "Shell", "Python", "PHP", "C", "Perl", "C++", "Java", "Obj-C"]'>
         </raphaeljspie-element>
         
-        <raphaeljspie-element class="card full"
-          __title="Big pie"
-          __values="[2, 2, 2]"
-          __labels='["Ruby", "JS", "Shell"]'
-          __radius="700">
+        <raphaeljspie-element class="card full" id="responsive"
+          __title="Responsive pie"
+          __values="[40, 26, 5, 5, 4, 4]"
+          __labels='["Ruby", "JS", "Shell", "Python", "PHP", "C"]'
+          __radius="2600">
         </raphaeljspie-element>
+        
+        
+        <script>
+            var oWidth = window.innerWidth, oHeight = window.innerWidth;
+            var proportion = 1 ; 
+
+            window.addEventListener("resize", function(){
+                   proportion = window.innerWidth/oWidth;
+                   document.getElementById('responsive').__proportion = proportion;
+            });
+        </script>
 	</body>
 </html>

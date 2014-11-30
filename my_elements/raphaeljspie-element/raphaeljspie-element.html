@@ -6,7 +6,7 @@
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <script src="raphael.js"></script>
-<polymer-element name="raphaeljspie-element" attributes="__values __labels __radius __title" >
+<polymer-element name="raphaeljspie-element" attributes="__values __labels __radius __title __proportion" >
     <template>
         <center><h1 style="color:#bab5b5; font-family:roboto-thin;">{{__title}}</h1></center>
         <div id="holder"></div>
@@ -62,12 +62,24 @@
           __labels: ["Ruby", "JavaScript", "Python"],
           __radius: 350,
           __title: "Simple pie",
+          __proportion: 1,
           ready: function() {
+            if (this.__radius > window.innerWidth) this.__radius = window.innerWidth*0.75;
             this.loadChart();
           },
           loadChart: function(){
               var r= parseInt(this.__radius), c = parseInt(this.__radius*0.5), e = parseInt(this.__radius*0.25);
+              this.$.holder.innerHTML = "";
+              var margin = -this.__radius/5;
+              this.$.holder.style.marginTop = margin.toString() + "px";
+              this.$.holder.style.marginBottom = margin.toString() + "px";
               Raphael(this.$.holder, r, r).pieChart(c, c, e, this.__values, this.__labels, "#fff");
+          },
+          __proportionChanged: function(){
+              this.__radius = window.innerWidth*0.8;
+              if ( this.__radius > 600 ) this.__radius == 600;
+              if ( this.__radius < 300 ) this.__radius == 300;
+              this.loadChart();
           }
         });
         })();

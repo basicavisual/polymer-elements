@@ -9,27 +9,32 @@
 <script src="g.raphael.js"></script>
 <script src="g.bar.js"></script>
 
-<polymer-element name="raphaeljsbars-element" attributes="__values __title __stacked __orientation __type __prefix __suffix __hoverColumn" >
+<polymer-element name="raphaeljsbars-element" attributes="__values __title __stacked __orientation __type __prefix __suffix __joinTooltip __colors __width __height __proportion" >
     <template>
         <div id="holder" style="margin-top:40px; width:100%; height: 60%;"></div>
     </template>
 <script>
     (function() {
-        
         Polymer('raphaeljsbars-element', {
           __values: [[40, 26, 5]], //be like:  [[55, 20, 13, 32, 5, 1, 2, 10], [10, 2, 1, 5, 32, 13, 20, 55]]
           __title: "Simple bars chart",
           __stacked: false,
-          __hoverColumn: false,
+          __joinTooltip: false,
           __type: "square", //type may be "round", "sharp", "soft" or "square"
           __orientation: "vertical", //orientation may be 'horizontal' or 'vertical'
           __prefix: "",
           __suffix: "",
+          __colors: ["blue","lightgreen","red"],
+          __width: 300,
+          __height: 220,
+          __proportion: 1,
           ready: function() {
+            if (this.__width > window.innerWidth) this.__width = window.innerWidth*0.8;
             this.loadChart();
           },
           loadChart: function(){
-              var r = Raphael(this.$.holder, 350, 300);
+              this.$.holder.innerHTML ="";
+              var r = Raphael(this.$.holder, parseInt(this.__width*1.2), parseInt(this.__height*1.3));
               this.loadData(r);
           },
           loadData: function(r){
@@ -55,28 +60,33 @@
                     txtattr = { font: "12px roboto" };
               
                 //Chart title
-                r.text(160, 10, this.__title).attr(txtattr);
+                r.text(this.__width/2, 10, this.__title).attr(txtattr);
               
                 //Chart data
                 if (this.__orientation == 'vertical'){
                   if (this.__values.length > 1)
-                    if (this.__hoverColumn)
-                        r.barchart(10, 25, 300, 220, this.__values, {stacked: this.__stacked, type: this.__type}).hoverColumn(fin2, fout2);
+                    if (this.__joinTooltip)
+                        r.barchart(10, 25, this.__width, this.__height, this.__values, {stacked: this.__stacked, type: this.__type, colors: this.__colors}).hoverColumn(fin2, fout2);
                     else
-                        r.barchart(10, 25, 300, 220, this.__values, {stacked: this.__stacked, type: this.__type}).hover(fin, fout);
+                        r.barchart(10, 25, this.__width, this.__height, this.__values, {stacked: this.__stacked, type: this.__type, colors: this.__colors}).hover(fin, fout);
                   else 
-                    r.barchart(10, 25, 300, 220, this.__values, {stacked: this.__stacked, type: this.__type}).hover(fin, fout);              
+                    r.barchart(10, 25, this.__width, this.__height, this.__values, {stacked: this.__stacked, type: this.__type, colors: this.__colors}).hover(fin, fout);              
                 }else {
                   if (this.__values.length > 1)
-                    if (this.__hoverColumn)
-                        r.hbarchart(10, 25, 300, 220, this.__values, {stacked: this.__stacked, type: this.__type}).hoverColumn(fin2, fout2);
+                    if (this.__joinTooltip)
+                        r.hbarchart(10, 25, this.__width, this.__height, this.__values, {stacked: this.__stacked, type: this.__type, colors: this.__colors}).hoverColumn(fin2, fout2);
                     else
-                        r.hbarchart(10, 25, 300, 220, this.__values, {stacked: this.__stacked, type: this.__type}).hover(fin, fout);
+                        r.hbarchart(10, 25, this.__width, this.__height, this.__values, {stacked: this.__stacked, type: this.__type, colors: this.__colors}).hover(fin, fout);
                   else 
-                    r.hbarchart(10, 25, 300, 220, this.__values, {stacked: this.__stacked, type: this.__type}).hover(fin, fout);
+                    r.hbarchart(10, 25, this.__width, this.__height, this.__values, {stacked: this.__stacked, type: this.__type, colors: this.__colors}).hover(fin, fout);
                 }
               
-          }
+          },
+          __proportionChanged: function(){ 
+              this.__width = window.innerWidth*0.8;
+              if (this.__width > 1280) this.__width = 1280; 
+              if (this.__width < 300) this.__width = 300; 
+              this.loadChart();}
         });
         })();
   
